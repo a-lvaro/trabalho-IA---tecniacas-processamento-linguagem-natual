@@ -1,13 +1,13 @@
 import re
 
 class Sumario:
-    def __init__(self, pagina) -> None:
-        self.__sumario = self.__sumario(pagina)
+    def __init__(self, pdfLido) -> None:
+        self.__sumario = self.__sumario(pdfLido)
 
-    def getSumario(self):
+    def getSumario(self) -> dict:
         return self.__sumario
     33
-    def getPaginasTopico(self, topico):
+    def getPaginasTopico(self, topico :str) -> list:
         paginas = []
         for keys, values in self.__sumario.items():
             if topico in keys:
@@ -15,8 +15,13 @@ class Sumario:
                 if len(paginas) == 2:
                     return paginas
 
+    def __encontrarSumario(self, pdfLido):
+        for pagina in pdfLido.pages:
+            if 'sumário' in pagina.extract_text().lower()[:30]:
+                return pagina.extract_text()
     
-    def sumario(pagina):
+    def __sumario(self, pdfLido):
+        pagina = self.__encontrarSumario(pdfLido)
         dic = {}
         aux = None
 
