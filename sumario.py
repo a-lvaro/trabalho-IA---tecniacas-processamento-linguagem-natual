@@ -19,17 +19,18 @@ class Sumario:
                 return posicaoPaginas
                 
 
-    def __encontrarPaginaSumario(self, pdfLido :object) -> str:
+    def __encontrarPagina(self, pdfLido :object, padrao :re) -> str:
         for pagina in pdfLido.pages:
-            if 'sumário' in pagina.extract_text().lower()[:30]:
+            if re.search(padrao, pagina.extract_text().lower()[:30]):
                 return pagina.extract_text()
             
-
-    def __limparSumario(self, sumario :str) -> str:
-        sumario = sumario.lower()
-        sumario = removerNumeroPagina(sumario)
-        sumario = removerPontuacao(sumario)
-        return sumario
+        return None
+            
+    def __limparPagina(self, pagina :str) -> str:
+        pagina = pagina.lower()
+        pagina = removerNumeroPagina(pagina)
+        pagina = removerPontuacao(pagina)
+        return pagina
             
     def __transformarEmLista(self, topico :str) -> list:
         topicoSemNumero = topico.split(' ', 1)[-1].strip()
@@ -37,32 +38,35 @@ class Sumario:
         return listaTopicoPagina
 
     def __extrairSumario(self, pdfLido :object):
-        paginaSumario = self.__encontrarPaginaSumario(pdfLido)
-        paginaSumario = self.__limparSumario(paginaSumario)
+        paginaRequerida = self.__encontrarPagina(pdfLido,  r'sumário')
+        paginaRequerida = self.__limparPagina(paginaRequerida)
 
         dic = {}
         aux = None
 
+
         # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
-        for topico in paginaSumario.split('\n')[1:]:
+        for topico in paginaRequerida.split('\n')[1:]:
             topicoPagina = self.__transformarEmLista(topico)
 
             if 'referências' in topico.split(' ', 1)[0].lower():
                 dic['referências'] = int(topicoPagina[-1].strip()) - 1
+
                 dic['ultima pagina'] = len(pdfLido.pages) - 1
 
                 return dic
-
-            if topicoPagina[-1].strip().isdigit():
-                if aux != None:
-                    dic[aux] = int(topicoPagina[-1].strip()) - 1
-                    aux = None
-                else:
-                    dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) - 1
+            
             else:
-                aux = topicoPagina[0].strip()
+                if topicoPagina[-1].strip().isdigit():
+                    if aux != None:
+                        dic[aux] = int(topicoPagina[-1].strip()) - 1
+                        aux = None
+                    else:
+                        dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) - 1
+                else:
+                    aux = topicoPagina[0].strip()
 
 
-lerpdf = lerPDF('ArquivosPT/DAR20052019.pdf')
-referencia = Sumario(lerpdf)
-print(referencia.getSumario())
+# lerpdf = lerPDF('ArquivosPT/DAR20052019.pdf')
+# referencia = Sumario(lerpdf)
+# print(referencia.getSumario())
