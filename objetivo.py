@@ -1,12 +1,11 @@
 import re
-from manipularPDF import removerPontuacao, lerPDF, removerNumeroPagina
+from manipularPDF import removerPontuacao, removerNumeroPagina
 from sumario import Sumario
 
 
 class Objetivo():
-    def __init__(self, path: str) -> None:
-        pdfLido = lerPDF(path)
-        self.__sumario = Sumario(path)
+    def __init__(self, pdfLido: object, sumario :Sumario) -> None:
+        self.__sumario = sumario
         self.__objetivo = self.__extrairObjetivo(pdfLido)
 
     def getObjetivo(self) -> str:
@@ -17,8 +16,7 @@ class Objetivo():
 
         paginas = self.__sumario.getPaginasTopico(r'objetivo(?:\sgeral)?\b')
         for posicao in paginas:
-            for pagina in pdfLido.pages[posicao].extract_text():
-                texto += pagina
+             texto += pdfLido.pages[posicao].extract_text()
 
         return texto
 
@@ -29,7 +27,7 @@ class Objetivo():
         paginaObjetivo = paginaObjetivo.lower()
 
         pattern1 = r'[0-9]\sobjetivo(?:\sgeral)?\b'
-        pattern2 = r'[0-9]\s\w+\b'
+        pattern2 = r'\b\d+\s+\w+'
 
         if re.search(pattern1, paginaObjetivo):
             posicaoInicio = re.search(pattern1, paginaObjetivo).end()
@@ -42,5 +40,5 @@ class Objetivo():
 
 
 # TODO está coltando um número inesperado, provevelmente pegando o número do tópico seguinte
-objetivo = Objetivo('ArquivosPT/DAR20052019.pdf')
-print(objetivo.getObjetivo())
+# objetivo = Objetivo('ArquivosPT/DAR20052019.pdf')
+# print(objetivo.getObjetivo())

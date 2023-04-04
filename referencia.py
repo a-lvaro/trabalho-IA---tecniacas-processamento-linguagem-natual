@@ -1,12 +1,10 @@
-import re
 from sumario import Sumario
-from manipularPDF import lerPDF, removerNumeroPagina, removerPontuacao
+from manipularPDF import lerPDF, removerNumeroPagina
 
 
 class Referencia():
-    def __init__(self, path: str) -> None:
-        pdfLido = lerPDF(path)
-        self.__sumario = Sumario(path)
+    def __init__(self, pdfLido: object, sumario :Sumario) -> None:
+        self.__sumario = sumario
         self.__referencia = self.__extrairReferencia(pdfLido)
 
     def getReferencia(self) -> list:
@@ -16,7 +14,6 @@ class Referencia():
         texto = ''
 
         paginas = self.__sumario.getPaginasTopico(r'referências\b')
-        print(paginas)
         for posicao in paginas:
             for pagina in pdfLido.pages[posicao].extract_text():
                 texto += pagina
@@ -25,7 +22,6 @@ class Referencia():
 
     def __extrairReferencia(self, pdfLido: object) -> str:
         paginaReferencia = self.__getPaginaReferencia(pdfLido)
-        print(paginaReferencia)
         paginaReferencia = removerNumeroPagina(paginaReferencia)
 
         paginaReferencia = paginaReferencia.lower().split(
@@ -38,5 +34,5 @@ class Referencia():
         return paginaReferencia
 
 
-referencia = Referencia('ArquivosPT/DAR20052019.pdf')
-referencia.getReferencia()
+# referencia = Referencia('ArquivosPT/DAR20052019.pdf')
+# referencia.getReferencia()

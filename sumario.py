@@ -1,10 +1,9 @@
 import re
-from manipularPDF import removerPontuacao, lerPDF, removerNumeroPagina
+from manipularPDF import removerPontuacao, removerNumeroPagina
 
 
 class Sumario:
-    def __init__(self, path :str) -> None:
-        pdfLido = lerPDF(path)
+    def __init__(self, pdfLido :object) -> None:
         self.__sumario = self.__extrairSumario(pdfLido)
 
     def getSumario(self) -> dict:
@@ -60,3 +59,8 @@ class Sumario:
 # # print(x.getPaginasTopico('introdução'))
 # print('\n\n')
 # print(x.getSumario())
+
+
+# lerpdf = lerPDF('ArquivosPT/DAR20052019.pdf')
+# referencia = Sumario(lerpdf)
+# print(referencia.getSumario())
