@@ -1,5 +1,6 @@
+import re
 from sumario import Sumario
-from manipularPDF import lerPDF, removerNumeroPagina
+from manipularPDF import removerNumeroPagina, removerBarraN
 
 
 class Referencia():
@@ -10,28 +11,32 @@ class Referencia():
     def getReferencia(self) -> list:
         return self.__referencia
 
-    def __getPaginaReferencia(self, pdfLido: object) -> str:
+    def __getPagina(self, pdfLido: object) -> str:
         texto = ''
 
         paginas = self.__sumario.getPaginasTopico(r'referências\b')
-        for posicao in paginas:
-            for pagina in pdfLido.pages[posicao].extract_text():
+        for posicao in range(paginas[0], paginas[1] + 1, 1):
+            pagina = pdfLido.pages[posicao].extract_text()
+            pagina = self.__limparPagina(pagina)
+
+            if re.match(r'\s*apêndice', pagina[:30]):
+                return texto
+            else:
                 texto += pagina
 
         return texto
+    
+    def __limparPagina(self, pagina :str) -> str:
+        pagina = pagina.lower()
+        pagina = removerNumeroPagina(pagina)
+        return pagina
 
     def __extrairReferencia(self, pdfLido: object) -> str:
-        paginaReferencia = self.__getPaginaReferencia(pdfLido)
-        paginaReferencia = removerNumeroPagina(paginaReferencia)
+        pagina = self.__getPagina(pdfLido)
 
-        paginaReferencia = paginaReferencia.lower().split(
-            ' referências  \n')[1]
-        paginaReferencia = paginaReferencia.split('.  \n')
+        pagina = pagina.split('.  \n')        
 
-        paginaReferencia = [referencia.replace(
-            '\n', '') for referencia in paginaReferencia]
-
-        return paginaReferencia
+        return pagina
 
 
 # referencia = Referencia('ArquivosPT/DAR20052019.pdf')

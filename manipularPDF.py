@@ -1,14 +1,28 @@
+import re
 import PyPDF2   
 from string import punctuation
 
-def removerNumeroPagina(pagina :str) -> str:
-    if pagina[3:5].isdigit():
-        pagina = pagina[5:]
+def removerNumeroPagina(pagina: str) -> str:
+    padrao1 = r'(\w+\s|)\d+\d'
+    padrao2 = r'\w+(í)\w+\s\d.\s\w+(çã)\w\s\d+'
+    
+    busca1 = re.search(padrao1, pagina[:10])
+    busca2 = re.search(padrao2, pagina[:30])
+    
+    if busca1:
+        termina = busca1.end()
+        pagina = pagina[termina:]
+    elif busca2:
+        termina = busca2.end()
+        pagina = pagina[termina:]
         
     return pagina
 
 def removerPontuacao(texto :str) -> str:
     return "".join(caractere for caractere in texto if caractere not in punctuation)
+
+def removerBarraN(texto :str) -> str:
+    return texto.replace('\n', '')
 
 
 def lerPDF(arquivo :str) -> str:

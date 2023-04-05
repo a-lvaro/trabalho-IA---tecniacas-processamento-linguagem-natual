@@ -1,5 +1,5 @@
 import re
-from manipularPDF import removerPontuacao, removerNumeroPagina, lerPDF
+from manipularPDF import removerPontuacao, removerNumeroPagina, removerBarraN
 
 
 class Sumario:
@@ -23,12 +23,13 @@ class Sumario:
         texto = ''
 
         for pagina in pdfLido.pages:
-            if re.search(padrao, pagina.extract_text().lower()[:30]):
-                texto = pagina.extract_text()
-            elif re.search(r'\d\s\w+', pagina.extract_text().lower()[:30]) and texto != '':
+            paginaLida = pagina.extract_text().lower()
+            if re.search(padrao, paginaLida[:30]):
+                termina = re.search(padrao, paginaLida).end()
+                texto = pagina.extract_text()[termina:]
+            elif re.search(r'( \n)+\d+\.\d+\.\s+\w+', paginaLida[:30]) and texto != '':
                 texto += pagina.extract_text()
-                return texto
-            elif re.search(r'\w+', pagina.extract_text().lower()[:30]) and texto != '':
+            elif re.search(r'\w+', paginaLida[:30]) and texto != '':
                 return texto
             
         return None
@@ -45,12 +46,11 @@ class Sumario:
         return listaTopicoPagina
 
     def __extrairSumario(self, pdfLido :object):
-        pagina = self.__encontrarPagina(pdfLido,  r'sumário')
+        pagina = self.__encontrarPagina(pdfLido,  r'sum\s*á\s*rio')
         pagina = self.__limparPagina(pagina)
 
         dic = {}
         aux = None
-
 
         # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
         for topico in pagina.split('\n')[1:]:
@@ -63,7 +63,7 @@ class Sumario:
 
                 return dic
             
-            else:
+            elif len(topicoPagina) > 1:
                 if topicoPagina[-1].strip().isdigit():
                     if aux != None:
                         dic[aux] = int(topicoPagina[-1].strip()) - 1
