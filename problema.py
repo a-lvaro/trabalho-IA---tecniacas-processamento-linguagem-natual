@@ -34,7 +34,7 @@ class Problema():
         pagina = self.__getPagina(pdfLido)
         pagina = self.__limparPagina(pagina)
 
-        rePadrao = r'resolver o problema\b'
+        rePadrao = r'resolver|solucioner) o problema\b'
         # pattern2 = r'\b\d+\s+\w+'
 
         if re.search(rePadrao, pagina):
