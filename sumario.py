@@ -20,9 +20,16 @@ class Sumario:
                 
 
     def __encontrarPagina(self, pdfLido :object, padrao :re) -> str:
+        texto = ''
+
         for pagina in pdfLido.pages:
             if re.search(padrao, pagina.extract_text().lower()[:30]):
-                return pagina.extract_text()
+                texto = pagina.extract_text()
+            elif re.search(r'\d\s\w+', pagina.extract_text().lower()[:30]) and texto != '':
+                texto += pagina.extract_text()
+                return texto
+            elif re.search(r'\w+', pagina.extract_text().lower()[:30]) and texto != '':
+                return texto
             
         return None
             
@@ -38,15 +45,15 @@ class Sumario:
         return listaTopicoPagina
 
     def __extrairSumario(self, pdfLido :object):
-        paginaRequerida = self.__encontrarPagina(pdfLido,  r'sumário')
-        paginaRequerida = self.__limparPagina(paginaRequerida)
+        pagina = self.__encontrarPagina(pdfLido,  r'sumário')
+        pagina = self.__limparPagina(pagina)
 
         dic = {}
         aux = None
 
 
         # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
-        for topico in paginaRequerida.split('\n')[1:]:
+        for topico in pagina.split('\n')[1:]:
             topicoPagina = self.__transformarEmLista(topico)
 
             if 'referências' in topico.split(' ', 1)[0].lower():

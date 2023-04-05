@@ -44,4 +44,6 @@ class Problema():
 
             pagina = pagina[posicaoInicio:]
 
+        pagina = pagina.replace('\n', '')
+
         return pagina
