@@ -2,6 +2,7 @@ from sumario import Sumario
 from objetivo import Objetivo
 from referencia import Referencia
 from problema import Problema
+from metodologia import Metodologia
 from manipularPDF import lerPDF
 
 
@@ -13,7 +14,7 @@ class Artigo():
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
         self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         self.__problema = Problema(self.__pdfLido, self.__sumario)
-        self.__metodologia = None
+        self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
         self.__contribuicao = None
 
     def getSumario(self) -> dict:
@@ -27,6 +28,9 @@ class Artigo():
     
     def getProblema(self) -> str:
         return self.__problema.getProblema()
+    
+    def getMetodologia(self) -> str:
+        return self.__metodologia.getMetodologia()
 
 
 artigo = Artigo('ArquivosPT/DAR20052019.pdf')
@@ -36,4 +40,6 @@ artigo = Artigo('ArquivosPT/DAR20052019.pdf')
 # print('\n\n')
 # print(artigo.getReferencia())
 # print('\n\n')
-print(artigo.getProblema())
+# print(artigo.getProblema())
+# print('\n\n')
+print(artigo.getMetodologia())
