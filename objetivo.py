@@ -28,8 +28,8 @@ class Objetivo():
     def __extrairObjetivo(self, pdfLido: object) -> str:
         reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
         
-        pagina = self.__getTextoTopico(pdfLido, reTopico)
-        pagina = self.__limparPagina(pagina)
+        texto = self.__getTextoTopico(pdfLido, reTopico)
+        texto = self.__limparPagina(texto)
 
         pattern1 = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
         pattern2 = r'\d+\s+\w+'
@@ -37,14 +37,14 @@ class Objetivo():
         # padraoComeca = r'objetivo(|s)(?:\sgera(l|is))?\b'
         # padraoTermina = r'\d+\s+\w+'
 
-        if re.search(pattern1, pagina):
-            posicaoInicio = re.search(pattern1, pagina).end()
+        if re.search(pattern1, texto):
+            posicaoInicio = re.search(pattern1, texto).end()
             posicaoFim = re.search(
-                pattern2, pagina[posicaoInicio:]).start()
+                pattern2, texto[posicaoInicio:]).start()
 
-            pagina = pagina[posicaoInicio: posicaoInicio + posicaoFim]
+            texto = texto[posicaoInicio: posicaoInicio + posicaoFim]
 
-        return pagina
+        return texto
 
 
 # TODO está coltando um número inesperado, provevelmente pegando o número do tópico seguinte

@@ -29,21 +29,21 @@ class Problema():
     def __extrairProblema(self, pdfLido: object) -> str:
         reTopico = r'introdução\b'
 
-        pagina = self.__getTextoTopico(pdfLido, reTopico)
+        texto = self.__getTextoTopico(pdfLido, reTopico)
         # TODO talvez não esteja limpando a numeração das páginas
-        pagina = self.__limparPagina(pagina)
+        texto = self.__limparPagina(texto)
 
         rePadrao = r'(resolver|solucioner) o problema\b'
         # pattern2 = r'\b\d+\s+\w+'
 
-        match = re.search(rePadrao, pagina)
+        match = re.search(rePadrao, texto)
         if match:
             posicaoInicio = match.start()
             # posicaoFim = re.search(
-            #     pattern2, pagina[posicaoInicio:]).start()
+            #     pattern2, texto[posicaoInicio:]).start()
 
-            pagina = pagina[posicaoInicio:]
+            texto = texto[posicaoInicio:]
 
-        pagina = pagina.replace('\n', '')
+        texto = texto.replace('\n', '')
 
-        return pagina
+        return texto
