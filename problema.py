@@ -11,8 +11,8 @@ class Problema():
         return self.__problema
     
     def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
-        texto = ''
         textoTopico = ''
+        # r'( \n)+\d+\.\d+\.\s+\w+' TESTAR ESSA FUNÇÃO
         reFimTopico = r'\d.\d\s*objetivos?\b'
 
         paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
@@ -21,12 +21,8 @@ class Problema():
             texto = pdfLido.pages[posicao].extract_text()
             texto = self.__limparPagina(texto)
 
-
             inicioTopico = re.search(reTopico, texto)
-            if inicioTopico:
-                fimTopico = re.search(reFimTopico[inicioTopico.end():], texto)
-            else:
-                fimTopico = re.search(reFimTopico, texto)
+            fimTopico = re.search(reFimTopico[inicioTopico.end():], texto) if inicioTopico else None
 
             if inicioTopico and fimTopico:
                 textoTopico += texto[inicioTopico.end():fimTopico.start()]

@@ -12,7 +12,7 @@ class Sumario:
     def getPaginasTopico(self, topicoRegex: re) -> list:
         posicaoPaginas = []
         for keys, values in self.__sumario.items():
-            if re.match(topicoRegex, keys):
+            if re.match(topicoRegex, keys) and len(posicaoPaginas) == 0:
                 posicaoPaginas.append(values)
             elif len(posicaoPaginas) == 1:
                 posicaoPaginas.append(values)
@@ -27,11 +27,11 @@ class Sumario:
             if re.search(padrao, paginaLida[:30]):
                 termina = re.search(padrao, paginaLida).end()
                 texto = pagina.extract_text()[termina:]
-            elif re.search(r'( \n)+\d+\.\d+\.\s+\w+', paginaLida[:30]) and texto != '':
+            elif re.search(r'(\s*)(\d+\.)+\d\s*\w+', paginaLida[:30]) and texto != '':
                 texto += pagina.extract_text()
             elif re.search(r'\w+', paginaLida[:30]) and texto != '':
                 return texto
-            
+        
         return None
             
     def __limparPagina(self, pagina :str) -> str:

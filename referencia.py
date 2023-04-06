@@ -11,19 +11,30 @@ class Referencia():
     def getReferencia(self) -> list:
         return self.__referencia
 
-    def __getPagina(self, pdfLido: object) -> str:
-        texto = ''
+    def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
+        textoTopico = ''
 
-        paginasPosicao = self.__sumario.getPaginasTopico(r'referências\b')
-        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
-            pagina = pdfLido.pages[posicao].extract_text()
+        for posicao in range(paginasTopico[0], paginasTopico[1]):
+            texto = pdfLido.pages[posicao].extract_text()
+            texto = self.__limparPagina(texto)
+            textoTopico += texto
 
-            if re.match(r'\s*(apêndice|anexo)', pagina[:30].lower()):
-                return texto
+        return textoTopico
+    
+    def __getTextoTopico(self, texto :str) -> str:
+        reComecoTopico = r'referências\b'
+        reFimTopico = r'\s*(apêndice|anexo)'
+
+        if re.search(reComecoTopico, texto):
+            posicaoInicioTopico = re.search(reComecoTopico, texto).end()
+            posicaoFimTopico = re.search(reFimTopico, texto[posicaoInicioTopico:]).start() if re.search(reFimTopico, texto[posicaoInicioTopico:]) else None
+
+            if posicaoFimTopico:
+                textoTopico = texto[posicaoInicioTopico: posicaoInicioTopico + posicaoFimTopico]
             else:
-                texto += pagina
+                textoTopico = texto[posicaoInicioTopico:]
 
-        return texto
+        return textoTopico
     
     def __limparPagina(self, pagina :str) -> str:
         pagina = pagina.lower()
@@ -31,12 +42,12 @@ class Referencia():
         return pagina
 
     def __extrairReferencia(self, pdfLido: object) -> str:
-        pagina = self.__getPagina(pdfLido)
+        reTopico = r'referências\b'
 
-        pagina = pagina.split('.  \n')        
+        paginasTopico = self.__sumario.getPaginasTopico(reTopico)
+        textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
+        textoTopico = self.__getTextoTopico(textoPaginas)
 
-        return pagina
+        textoTopico = textoTopico.split('.  \n')        
 
-
-# referencia = Referencia('ArquivosPT/DAR20052019.pdf')
-# referencia.getReferencia()
+        return textoTopico

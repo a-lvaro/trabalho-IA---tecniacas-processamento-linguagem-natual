@@ -10,43 +10,39 @@ class Objetivo():
     def getObjetivo(self) -> str:
         return self.__objetivo
 
-    def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
-        texto = ''
+    def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
+        textoTopico = ''
+        for posicao in range(paginasTopico[0], paginasTopico[1] + 1):
+            texto = pdfLido.pages[posicao].extract_text()
+            texto = self.__limparPagina(texto)
+            textoTopico += texto
 
-        paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
-        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
-             texto += pdfLido.pages[posicao].extract_text()
-
-        return texto
+        return textoTopico
     
-    def __limparPagina(self, pagina :str) -> str:
-        pagina = pagina.lower()
-        pagina = removerNumeroPagina(pagina)
-        pagina = removerPontuacao(pagina)
-        return pagina
+    def __getTextoTopico(self, texto :str) -> str:
+        comecoTopico = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
+        fimTopico = r'\d+\s+\w+'
 
-    def __extrairObjetivo(self, pdfLido: object) -> str:
-        reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
-        
-        texto = self.__getTextoTopico(pdfLido, reTopico)
-        texto = self.__limparPagina(texto)
-
-        pattern1 = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
-        pattern2 = r'\d+\s+\w+'
-
-        # padraoComeca = r'objetivo(|s)(?:\sgera(l|is))?\b'
-        # padraoTermina = r'\d+\s+\w+'
-
-        if re.search(pattern1, texto):
-            posicaoInicio = re.search(pattern1, texto).end()
+        if re.search(comecoTopico, texto):
+            posicaoInicio = re.search(comecoTopico, texto).end()
             posicaoFim = re.search(
-                pattern2, texto[posicaoInicio:]).start()
+                fimTopico, texto[posicaoInicio:]).start()
 
             texto = texto[posicaoInicio: posicaoInicio + posicaoFim]
 
         return texto
 
+    
+    def __limparPagina(self, pagina :str) -> str:
+        pagina = pagina.lower()
+        pagina = removerNumeroPagina(pagina)
+        return pagina
 
-# TODO está coltando um número inesperado, provevelmente pegando o número do tópico seguinte
-# objetivo = Objetivo('ArquivosPT/DAR20052019.pdf')
-# print(objetivo.getObjetivo())
+    def __extrairObjetivo(self, pdfLido: object) -> str:
+        reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
+        
+        paginasTopico = self.__sumario.getPaginasTopico(reTopico)
+        textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
+        textoTopico = self.__getTextoTopico(textoPaginas)
+
+        return textoTopico
