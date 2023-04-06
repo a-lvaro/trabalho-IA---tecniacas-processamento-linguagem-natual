@@ -57,19 +57,19 @@ class Sumario:
             topicoPagina = self.__transformarEmLista(topico)
 
             if 'referências' in topico.split(' ', 1)[0].lower():
-                dic['referências'] = int(topicoPagina[-1].strip()) - 1
+                dic['referências'] = int(topicoPagina[-1].strip()) #- 1
 
-                dic['ultima pagina'] = len(pdfLido.pages) - 1
+                dic['ultima pagina'] = len(pdfLido.pages) #- 1
 
                 return dic
             
             elif len(topicoPagina) > 1:
                 if topicoPagina[-1].strip().isdigit():
                     if aux != None:
-                        dic[aux] = int(topicoPagina[-1].strip()) - 1
+                        dic[aux] = int(topicoPagina[-1].strip()) #- 1
                         aux = None
                     else:
-                        dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) - 1
+                        dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) #- 1
                 else:
                     aux = topicoPagina[0].strip()
 

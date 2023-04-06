@@ -19,7 +19,7 @@ class Referencia():
             pagina = pdfLido.pages[posicao].extract_text()
             pagina = self.__limparPagina(pagina)
 
-            if re.match(r'\s*apêndice', pagina[:30]):
+            if re.match(r'\s*(apêndice|anexo)', pagina[:30]):
                 return texto
             else:
                 texto += pagina

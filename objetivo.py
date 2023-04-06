@@ -11,32 +11,39 @@ class Objetivo():
     def getObjetivo(self) -> str:
         return self.__objetivo
 
-    def __getPaginaObjetivo(self, pdfLido: object) -> str:
+    def __getPagina(self, pdfLido: object) -> str:
         texto = ''
 
-        paginas = self.__sumario.getPaginasTopico(r'objetivo(?:\sgeral)?\b')
-        for posicao in paginas:
+        paginas = self.__sumario.getPaginasTopico(r'objetivo(|s)(?:\sgera(l|is))?\b')
+        for posicao in range(paginas[0], paginas[1] - 1, -1):
              texto += pdfLido.pages[posicao].extract_text()
 
         return texto
+    
+    def __limparPagina(self, pagina :str) -> str:
+        pagina = pagina.lower()
+        pagina = removerNumeroPagina(pagina)
+        pagina = removerPontuacao(pagina)
+        return pagina
 
     def __extrairObjetivo(self, pdfLido: object) -> str:
-        paginaObjetivo = self.__getPaginaObjetivo(pdfLido)
-        paginaObjetivo = removerNumeroPagina(paginaObjetivo)
-        paginaObjetivo = removerPontuacao(paginaObjetivo)
-        paginaObjetivo = paginaObjetivo.lower()
+        pagina = self.__getPagina(pdfLido)
+        pagina = self.__limparPagina(pagina)
 
-        pattern1 = r'[0-9]\sobjetivo(?:\sgeral)?\b'
-        pattern2 = r'\b\d+\s+\w+'
+        pattern1 = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
+        pattern2 = r'\d+\s+\w+'
 
-        if re.search(pattern1, paginaObjetivo):
-            posicaoInicio = re.search(pattern1, paginaObjetivo).end()
+        # padraoComeca = r'objetivo(|s)(?:\sgera(l|is))?\b'
+        # padraoTermina = r'\d+\s+\w+'
+
+        if re.search(pattern1, pagina):
+            posicaoInicio = re.search(pattern1, pagina).end()
             posicaoFim = re.search(
-                pattern2, paginaObjetivo[posicaoInicio:]).start()
+                pattern2, pagina[posicaoInicio:]).start()
 
-            paginaObjetivo = paginaObjetivo[posicaoInicio: posicaoInicio + posicaoFim]
+            pagina = pagina[posicaoInicio: posicaoInicio + posicaoFim]
 
-        return paginaObjetivo
+        return pagina
 
 
 # TODO está coltando um número inesperado, provevelmente pegando o número do tópico seguinte
