@@ -7,3 +7,5 @@ isso aqui pode ser um regex: (diversos estudos estão sendo realizados)
 
 
 problema na posição da página
+
+> rever se o número das páginas estão sendo tiradas

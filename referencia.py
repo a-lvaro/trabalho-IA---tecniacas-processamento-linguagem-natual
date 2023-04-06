@@ -1,6 +1,6 @@
 import re
 from sumario import Sumario
-from manipularPDF import removerNumeroPagina, removerBarraN
+from manipularPDF import removerNumeroPagina
 
 
 class Referencia():
@@ -14,12 +14,11 @@ class Referencia():
     def __getPagina(self, pdfLido: object) -> str:
         texto = ''
 
-        paginas = self.__sumario.getPaginasTopico(r'referências\b')
-        for posicao in range(paginas[0], paginas[1] + 1, 1):
+        paginasPosicao = self.__sumario.getPaginasTopico(r'referências\b')
+        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
             pagina = pdfLido.pages[posicao].extract_text()
-            pagina = self.__limparPagina(pagina)
 
-            if re.match(r'\s*(apêndice|anexo)', pagina[:30]):
+            if re.match(r'\s*(apêndice|anexo)', pagina[:30].lower()):
                 return texto
             else:
                 texto += pagina

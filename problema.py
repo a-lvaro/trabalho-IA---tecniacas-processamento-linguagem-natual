@@ -10,16 +10,12 @@ class Problema():
     def getProblema(self) -> str:
         return self.__problema
     
-    def __getPagina(self, pdfLido: object) -> str:
+    def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
         texto = ''
 
-        paginas = self.__sumario.getPaginasTopico(r'introdução\b')
-        for posicao in range(paginas[0], paginas[1] + 1, 1):
-             if re.search(r'(\n)(\d.|)(\d.|)\d\s\w+', pdfLido.pages[posicao].extract_text()):
-                fim = re.search(r'(\n)(\d.|)(\d.|)\d\s\w+', pdfLido.pages[posicao].extract_text()).start()
-                texto += removerNumeroPagina(pdfLido.pages[posicao].extract_text()[:fim])
-             else:
-                 texto += removerNumeroPagina(pdfLido.pages[posicao].extract_text())
+        paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
+        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
+             texto += pdfLido.pages[posicao].extract_text()
 
         return texto
     
@@ -31,14 +27,18 @@ class Problema():
 
 
     def __extrairProblema(self, pdfLido: object) -> str:
-        pagina = self.__getPagina(pdfLido)
+        reTopico = r'introdução\b'
+
+        pagina = self.__getTextoTopico(pdfLido, reTopico)
+        # TODO talvez não esteja limpando a numeração das páginas
         pagina = self.__limparPagina(pagina)
 
         rePadrao = r'(resolver|solucioner) o problema\b'
         # pattern2 = r'\b\d+\s+\w+'
 
-        if re.search(rePadrao, pagina):
-            posicaoInicio = re.search(rePadrao, pagina).start()
+        match = re.search(rePadrao, pagina)
+        if match:
+            posicaoInicio = match.start()
             # posicaoFim = re.search(
             #     pattern2, pagina[posicaoInicio:]).start()
 

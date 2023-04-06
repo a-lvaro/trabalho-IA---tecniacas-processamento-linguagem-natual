@@ -1,7 +1,6 @@
 import re
-from manipularPDF import removerPontuacao, removerNumeroPagina
 from sumario import Sumario
-
+from manipularPDF import removerPontuacao, removerNumeroPagina
 
 class Objetivo():
     def __init__(self, pdfLido: object, sumario :Sumario) -> None:
@@ -11,11 +10,11 @@ class Objetivo():
     def getObjetivo(self) -> str:
         return self.__objetivo
 
-    def __getPagina(self, pdfLido: object) -> str:
+    def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
         texto = ''
 
-        paginas = self.__sumario.getPaginasTopico(r'objetivo(|s)(?:\sgera(l|is))?\b')
-        for posicao in range(paginas[0], paginas[1] - 1, -1):
+        paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
+        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
              texto += pdfLido.pages[posicao].extract_text()
 
         return texto
@@ -27,7 +26,9 @@ class Objetivo():
         return pagina
 
     def __extrairObjetivo(self, pdfLido: object) -> str:
-        pagina = self.__getPagina(pdfLido)
+        reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
+        
+        pagina = self.__getTextoTopico(pdfLido, reTopico)
         pagina = self.__limparPagina(pagina)
 
         pattern1 = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
