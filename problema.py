@@ -1,6 +1,6 @@
 import re
 from sumario import Sumario
-from manipularPDF import removerNumeroPagina, removerPontuacao
+from manipularPDF import removerNumeroPagina, removerPontuacao, removerBarraN
 
 class Problema():
     def __init__(self, pdfLido: object, sumario: Sumario) -> None:
@@ -12,38 +12,55 @@ class Problema():
     
     def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
         texto = ''
+        textoTopico = ''
+        reFimTopico = r'\d.\d\s*objetivos?\b'
 
         paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
+        
         for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
-             texto += pdfLido.pages[posicao].extract_text()
+            texto = pdfLido.pages[posicao].extract_text()
+            texto = self.__limparPagina(texto)
 
-        return texto
+
+            inicioTopico = re.search(reTopico, texto)
+            if inicioTopico:
+                fimTopico = re.search(reFimTopico[inicioTopico.end():], texto)
+            else:
+                fimTopico = re.search(reFimTopico, texto)
+
+            if inicioTopico and fimTopico:
+                textoTopico += texto[inicioTopico.end():fimTopico.start()]
+            elif inicioTopico:
+                textoTopico += texto[inicioTopico.end():]
+            elif fimTopico:
+                textoTopico += texto[:fimTopico.start()]
+        
+        return textoTopico
     
-    def __limparPagina(self, pagina :str) -> str:
-        pagina = pagina.lower()
-        pagina = removerNumeroPagina(pagina)
-        pagina = removerPontuacao(pagina)
-        return pagina
+    def __limparPagina(self, texto :str) -> str:
+        texto = texto.lower()
+        texto = removerNumeroPagina(texto)
+        texto = removerBarraN(texto)
+        return texto
 
 
     def __extrairProblema(self, pdfLido: object) -> str:
-        reTopico = r'introdução\b'
+        reTopico = r'introdução'
 
         texto = self.__getTextoTopico(pdfLido, reTopico)
-        # TODO talvez não esteja limpando a numeração das páginas
-        texto = self.__limparPagina(texto)
 
-        rePadrao = r'(resolver|solucioner) o problema\b'
+        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados)\b'
         # pattern2 = r'\b\d+\s+\w+'
 
-        match = re.search(rePadrao, texto)
+        match = re.search(reProblemaInicio, texto)
         if match:
-            posicaoInicio = match.start()
-            # posicaoFim = re.search(
-            #     pattern2, texto[posicaoInicio:]).start()
+            texto = texto[match.start():]
 
-            texto = texto[posicaoInicio:]
-
-        texto = texto.replace('\n', '')
+            countPonto = 0
+            for posicao, char in enumerate(texto):
+                if char == '.':
+                    countPonto += 1
+                if countPonto == 2:
+                    texto = texto[:posicao]
 
         return texto

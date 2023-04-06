@@ -22,7 +22,7 @@ def removerPontuacao(texto :str) -> str:
     return "".join(caractere for caractere in texto if caractere not in punctuation)
 
 def removerBarraN(texto :str) -> str:
-    return texto.replace('\n', '')
+    return texto.replace('\n', ' ')
 
 
 def lerPDF(arquivo :str) -> str:
