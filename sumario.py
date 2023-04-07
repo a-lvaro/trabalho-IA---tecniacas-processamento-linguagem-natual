@@ -19,41 +19,52 @@ class Sumario:
                 return posicaoPaginas
                 
 
-    def __encontrarPagina(self, pdfLido :object, padrao :re) -> str:
+    def __encontrarPagina(self, pdfLido :object, reTopico :re) -> str:
         texto = ''
+        reReferencia = r'referências\s*\ .*\b'
+        achouTopico = False
 
         for pagina in pdfLido.pages:
             paginaLida = pagina.extract_text().lower()
-            if re.search(padrao, paginaLida[:30]):
-                termina = re.search(padrao, paginaLida).end()
-                texto = pagina.extract_text()[termina:]
-            elif re.search(r'(\s*)(\d+\.)+\d\s*\w+', paginaLida[:30]) and texto != '':
-                texto += pagina.extract_text()
-            elif re.search(r'\w+', paginaLida[:30]) and texto != '':
+            inicioTopico = re.search(reTopico, paginaLida[:30])
+            fimTopico = re.search(reReferencia, paginaLida)
+
+            if inicioTopico and fimTopico:
+                inicio = inicioTopico.end()
+                fim = fimTopico.end()
+                texto = pagina.extract_text()[inicio:fim]
                 return texto
+
+            elif inicioTopico:
+                inicio = inicioTopico.end()
+                texto = pagina.extract_text()[inicio:]
+                achoTopico = True
+            elif fimTopico:
+                fim = fimTopico.end()
+                texto += pagina.extract_text()[:fim]
+                return texto
+            elif achouTopico:
+                texto += pagina.extract_text()
         
         return None
             
-    def __limparPagina(self, pagina :str) -> str:
-        pagina = pagina.lower()
-        pagina = removerNumeroPagina(pagina)
-        pagina = removerPontuacao(pagina)
-        return pagina
+    def __limparPagina(self, texto :str) -> str:
+        texto = texto.lower()
+        texto = removerNumeroPagina(texto)
+        texto = removerPontuacao(texto)
+        return texto
             
     def __transformarEmLista(self, topico :str) -> list:
         topicoSemNumero = topico.split(' ', 1)[-1].strip()
         listaTopicoPagina = re.split(r'\s{2,}', topicoSemNumero)
         return listaTopicoPagina
-
-    def __extrairSumario(self, pdfLido :object):
-        pagina = self.__encontrarPagina(pdfLido,  r'sum\s*á\s*rio')
-        pagina = self.__limparPagina(pagina)
-
+    
+    def __transformarEmDicionario(self,  pdfLido :object, texto :str) -> dict:
         dic = {}
         aux = None
 
         # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
-        for topico in pagina.split('\n')[1:]:
+        for topico in texto.split('\n')[1:]:
             topicoPagina = self.__transformarEmLista(topico)
 
             if 'referências' in topico.split(' ', 1)[0].lower():
@@ -74,6 +85,11 @@ class Sumario:
                     aux = topicoPagina[0].strip()
 
 
-# lerpdf = lerPDF('ArquivosPT/DAR20052019.pdf')
-# referencia = Sumario(lerpdf)
-# print(referencia.getSumario())
+    def __extrairSumario(self, pdfLido :object):
+        reTopico =  r'sum\s*á\s*rio'
+
+        texto = self.__encontrarPagina(pdfLido, reTopico)
+        texto = self.__limparPagina(texto)
+        return self.__transformarEmDicionario(pdfLido, texto)
+
+        
