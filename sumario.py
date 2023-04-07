@@ -54,35 +54,58 @@ class Sumario:
         texto = removerPontuacao(texto)
         return texto
             
-    def __transformarEmLista(self, topico :str) -> list:
-        topicoSemNumero = topico.split(' ', 1)[-1].strip()
-        listaTopicoPagina = re.split(r'\s{2,}', topicoSemNumero)
+    def __transformarEmLista(self, texto :str) -> list:
+        listaTopicoPagina = []
+        for topico in texto.split('\n')[1:]:
+            print(topico)
+            topicoSemNumero = topico.split(' ', 1)[-1].strip()
+            listaTopicoPagina.append(re.split(r'\s{2,}', topicoSemNumero))
+
         return listaTopicoPagina
     
     def __transformarEmDicionario(self,  pdfLido :object, texto :str) -> dict:
         dic = {}
         aux = None
+        for topico in texto:
+            print(topico)
 
-        # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
-        for topico in texto.split('\n')[1:]:
-            topicoPagina = self.__transformarEmLista(topico)
-
-            if 'referências' in topico.split(' ', 1)[0].lower():
-                dic['referências'] = int(topicoPagina[-1].strip()) #- 1
-
-                dic['ultima pagina'] = len(pdfLido.pages) #- 1
-
+            if 'referência' in  topico[0].lower():
+                dic['referências'] = int(topico[-1].strip())
+                dic['ultima pagina'] = len(pdfLido.pages)
                 return dic
             
-            elif len(topicoPagina) > 1:
-                if topicoPagina[-1].strip().isdigit():
+            elif topico != ['']:
+                print('aqui')
+                if topico[-1].strip().isdigit():
                     if aux != None:
-                        dic[aux] = int(topicoPagina[-1].strip()) #- 1
+                        dic[aux] = int(topico[-1].strip())
                         aux = None
                     else:
-                        dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) #- 1
-                else:
-                    aux = topicoPagina[0].strip()
+                        dic[topico[0]] = int(topico[-1].strip())
+
+        return None
+
+        # TODO da pra colocar esse sumário no pandas, talvez facilite a vida
+        # for topico in texto.split('\n')[1:]:
+        #     topicoPagina = self.__transformarEmLista(topico)
+        #     print(topicoPagina)
+
+        #     if 'referências' in topico.split(' ', 1)[0].lower():
+        #         dic['referências'] = int(topicoPagina[-1].strip()) #- 1
+
+        #         dic['ultima pagina'] = len(pdfLido.pages) #- 1
+
+        #         return dic
+            
+        #     elif len(topicoPagina) > 1:
+        #         if topicoPagina[-1].strip().isdigit():
+        #             if aux != None:
+        #                 dic[aux] = int(topicoPagina[-1].strip()) #- 1
+        #                 aux = None
+        #             else:
+        #                 dic[topicoPagina[0]] = int(topicoPagina[-1].strip()) #- 1
+        #         else:
+        #             aux = topicoPagina[0].strip()
 
 
     def __extrairSumario(self, pdfLido :object):
@@ -90,6 +113,8 @@ class Sumario:
 
         texto = self.__encontrarPagina(pdfLido, reTopico)
         texto = self.__limparPagina(texto)
-        return self.__transformarEmDicionario(pdfLido, texto)
+        listaTopico = self.__transformarEmLista(texto)
+        print(listaTopico)
+        return self.__transformarEmDicionario(pdfLido, listaTopico)
 
         
