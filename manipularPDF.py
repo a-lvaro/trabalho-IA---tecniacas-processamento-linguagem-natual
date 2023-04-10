@@ -18,9 +18,16 @@ def removerNumeroPagina(pagina: str) -> str:
         
     return pagina
 
+def limparTexto(texto :str) -> str:
+    texto = texto.lower()
+    texto = removerNumeroPagina(texto)
+    texto = removerPontuacao(texto)
+    return texto
+
 def removerPontuacao(texto :str) -> str:
     return "".join(caractere for caractere in texto if caractere not in punctuation)
 
+# é usado na classe problema. Será que é necessário?
 def removerBarraN(texto :str) -> str:
     return texto.replace('\n', ' ')
 
