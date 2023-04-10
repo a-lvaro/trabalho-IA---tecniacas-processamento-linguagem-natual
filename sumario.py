@@ -25,7 +25,7 @@ class Sumario:
         reFimTopico = r'referências\s*\ .*\b'
         achouTopico = False
 
-        for pagina in pdfLido.pages:
+        for ola, pagina in enumerate(pdfLido.pages):
             paginaLida = pagina.extract_text()
             textoLimpo = limparTexto(paginaLida)
             
@@ -44,7 +44,7 @@ class Sumario:
                 textoFinal = textoLimpo[inicio:]
                 achouTopico = True
 
-            elif fimTopico:
+            elif fimTopico and achouTopico:
                 fim = fimTopico.end()
                 textoFinal += textoLimpo[:fim]
                 return textoFinal
@@ -94,12 +94,32 @@ class Sumario:
             dicTopicosSumario[nomeTopico] = numeroPagina
 
         return dicTopicosSumario
+    
+    def __atualizarNumeracaoPaginas(self, dicionarioSumario :dict, atualizacao :int) -> dict:
+        for keys, values in dicionarioSumario.items():
+            dicionarioSumario[keys] = values + atualizacao
+        return dicionarioSumario
+    
+    def __testarNumeracaoPaginas(self, pdfLido :str, dicionarioSumario :dict) -> bool:
+        reTopico = r'introdução'
+        paginasTopico = self.getPaginasTopico(reTopico)
+
+        if re.search(reTopico, pdfLido.pages[paginasTopico[0]].extract_text()[:30].lower()):
+            dicionarioSumario = dicionarioSumario
+        elif re.search(reTopico, pdfLido.pages[paginasTopico[0] + 1].extract_text()[:30].lower()):
+            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, 1)
+        elif re.search(reTopico, pdfLido.pages[paginasTopico[0] - 1].extract_text()[:30].lower()):
+            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, 1)
+        else:
+            dicionarioSumario = None
+
+        return dicionarioSumario
 
     def __extrairSumario(self, pdfLido :object) -> dict:
         texto = self.__extrairTextoSumario(pdfLido)
-        print(texto)
         listaTextoPadronizado = self.__padronizarTexto(texto)
         listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages)))
-        return self.__transformarEmDicionario(listaTextoPadronizado)
+        self.__sumario = dicionarioTextoPadronizado = self.__transformarEmDicionario(listaTextoPadronizado)
+        return self.__testarNumeracaoPaginas(pdfLido, dicionarioTextoPadronizado)
 
         
