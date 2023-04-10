@@ -42,6 +42,9 @@ class Objetivo():
         reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
         
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
+        print('-' * 50)
+        print(paginasTopico)
+        print('-' * 50)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
         textoTopico = self.__getTextoTopico(textoPaginas)
 
