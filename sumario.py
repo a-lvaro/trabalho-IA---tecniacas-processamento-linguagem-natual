@@ -1,5 +1,5 @@
 import re
-from manipularPDF import removerPontuacao, removerNumeroPagina
+from manipularPDF import limparTexto
 
 
 class Sumario:
@@ -20,43 +20,39 @@ class Sumario:
                 
 
     def __extrairTextoSumario(self, pdfLido :object) -> str:
-        texto = ''
+        textoFinal = ''
         reInicioTopico =  r'sum\s*á\s*rio'
         reFimTopico = r'referências\s*\ .*\b'
         achouTopico = False
 
         for pagina in pdfLido.pages:
-            paginaLida = pagina.extract_text().lower()
+            paginaLida = pagina.extract_text()
+            textoLimpo = limparTexto(paginaLida)
             
-            inicioTopico = re.search(reInicioTopico, paginaLida[:30])
-            fimTopico = re.search(reFimTopico, paginaLida)
+            inicioTopico = re.search(reInicioTopico, textoLimpo[:30])
+            fimTopico = re.search(reFimTopico, textoLimpo)
+
 
             if inicioTopico and fimTopico:
                 inicio = inicioTopico.end()
                 fim = fimTopico.end()
-                texto = pagina.extract_text()[inicio:fim]
-                return texto
+                textoFinal = textoLimpo[inicio:fim]
+                return textoFinal
 
             elif inicioTopico:
                 inicio = inicioTopico.end()
-                texto = pagina.extract_text()[inicio:]
+                textoFinal = textoLimpo[inicio:]
                 achouTopico = True
 
             elif fimTopico:
                 fim = fimTopico.end()
-                texto += pagina.extract_text()[:fim]
-                return texto
+                textoFinal += textoLimpo[:fim]
+                return textoFinal
             
             elif achouTopico:
-                texto += pagina.extract_text()
+                textoFinal += textoLimpo
         
         return None
-            
-    def __limparPagina(self, texto :str) -> str:
-        texto = texto.lower()
-        texto = removerNumeroPagina(texto)
-        texto = removerPontuacao(texto)
-        return texto
     
     def __excluirNumeracaoSumario(self, texto :str) -> str:
         texto = re.sub(r'\d+\.\s*', '', texto)
@@ -69,19 +65,22 @@ class Sumario:
         aux = ''
 
         for topico in texto.strip().split('\n'):
+            topico = topico.strip()
             # exclui a numeração do sumário
-            topico = re.sub(r'^\d+\s*', '', topico.strip())
+            if not topico.isdigit():
+                topico = re.sub(r'^\d+\s*', '', topico)
 
-            if topico[-1].isdigit() and naoPadronizado == False:
-                listaTopicos.append(topico)
+            if topico != '':
+                if topico[-1].isdigit() and naoPadronizado == False:
+                    listaTopicos.append(topico)
 
-            elif naoPadronizado == False:
-                aux = topico
-                naoPadronizado = True
+                elif naoPadronizado == False:
+                    aux = topico
+                    naoPadronizado = True
 
-            elif naoPadronizado == True:
-                listaTopicos.append(aux + ' ' + topico)
-                naoPadronizado = False
+                elif naoPadronizado == True:
+                    listaTopicos.append(aux + ' ' + topico)
+                    naoPadronizado = False
 
         return listaTopicos
             
@@ -98,7 +97,7 @@ class Sumario:
 
     def __extrairSumario(self, pdfLido :object) -> dict:
         texto = self.__extrairTextoSumario(pdfLido)
-        texto = self.__limparPagina(texto)
+        print(texto)
         listaTextoPadronizado = self.__padronizarTexto(texto)
         listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages)))
         return self.__transformarEmDicionario(listaTextoPadronizado)
