@@ -1,6 +1,6 @@
 import re
 from sumario import Sumario
-from manipularPDF import removerPontuacao, removerNumeroPagina
+from manipularPDF import removerNumeroPagina
 
 class Objetivo():
     def __init__(self, pdfLido: object, sumario :Sumario) -> None:
@@ -42,9 +42,6 @@ class Objetivo():
         reTopico = r'objetivo(|s)(?:\sgera(l|is))?\b'
         
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
-        print('-' * 50)
-        print(paginasTopico)
-        print('-' * 50)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
         textoTopico = self.__getTextoTopico(textoPaginas)
 

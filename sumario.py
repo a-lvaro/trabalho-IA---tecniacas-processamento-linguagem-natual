@@ -11,6 +11,7 @@ class Sumario:
 
     def getPaginasTopico(self, topicoRegex: re) -> list:
         posicaoPaginas = []
+
         for keys, values in self.__sumario.items():
             if re.match(topicoRegex, keys) and len(posicaoPaginas) == 0:
                 posicaoPaginas.append(values)
@@ -101,7 +102,7 @@ class Sumario:
         return dicionarioSumario
     
     def __testarNumeracaoPaginas(self, pdfLido :str, dicionarioSumario :dict) -> bool:
-        reTopico = r'introdução'
+        reTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
         paginasTopico = self.getPaginasTopico(reTopico)
 
         if re.search(reTopico, pdfLido.pages[paginasTopico[0]].extract_text()[:30].lower()):
