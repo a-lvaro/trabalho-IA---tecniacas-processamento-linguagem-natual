@@ -20,15 +20,17 @@ class Objetivo():
         return textoTopico
     
     def __getTextoTopico(self, texto :str) -> str:
-        comecoTopico = r'[0-9]\sobjetivo(|s)(?:\sgera(l|is))?\b'
+        comecoTopico = r'[0-9](\.|)\sobjetivo(|s)(?:\sgera(l|is))?\b'
         fimTopico = r'\d+\s+\w+'
 
-        if re.search(comecoTopico, texto):
-            posicaoInicio = re.search(comecoTopico, texto).end()
-            posicaoFim = re.search(
-                fimTopico, texto[posicaoInicio:]).start()
+        inicioTopico = re.search(comecoTopico, texto)
+        fimTopico = re.search(fimTopico, texto)
 
-            texto = texto[posicaoInicio: posicaoInicio + posicaoFim]
+        if inicioTopico and fimTopico:
+            posicaoInicio = inicioTopico.end()
+            posicaoFim = fimTopico.start()
+
+            texto = texto[posicaoInicio: posicaoFim]
 
         return texto
 
@@ -44,5 +46,8 @@ class Objetivo():
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
         textoTopico = self.__getTextoTopico(textoPaginas)
+        print('\n\n\n   ------------------------------------')
+        print(textoPaginas)
+        print('------------------------------------    \n\n\n')
 
         return textoTopico
