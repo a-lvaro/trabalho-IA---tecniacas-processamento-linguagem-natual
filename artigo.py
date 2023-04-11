@@ -34,7 +34,7 @@ class Artigo():
     #     return self.__metodologia.getMetodologia()
 
 
-artigo = Artigo('ArquivosFuncionando/ROBERTO-PEREIRA.pdf')
+artigo = Artigo('ArquivosTeste/TCC FINAL_Sandy.pdf')
 print(artigo.getSumario())
 print('\n\n OBJETIVO')
 print(artigo.getObjetivo())
