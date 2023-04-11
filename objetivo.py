@@ -46,8 +46,5 @@ class Objetivo():
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
         textoTopico = self.__getTextoTopico(textoPaginas)
-        print('\n\n\n   ------------------------------------')
-        print(textoPaginas)
-        print('------------------------------------    \n\n\n')
 
         return textoTopico
