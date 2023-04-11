@@ -10,41 +10,55 @@ class Problema():
     def getProblema(self) -> str:
         return self.__problema
     
-    def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
+    def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
         textoTopico = ''
-        # r'( \n)+\d+\.\d+\.\s+\w+' TESTAR ESSA FUNÇÃO
-        reFimTopico = r'\d.\d\s*objetivos?\b'
-
-        paginasPosicao = self.__sumario.getPaginasTopico(reTopico)
-        
-        for posicao in range(paginasPosicao[0], paginasPosicao[1] + 1):
+        for posicao in range(paginasTopico[0], paginasTopico[1] + 1):
             texto = pdfLido.pages[posicao].extract_text()
             texto = self.__limparPagina(texto)
+            textoTopico += texto
 
-            inicioTopico = re.search(reTopico, texto)
-            fimTopico = re.search(reFimTopico[inicioTopico.end():], texto) if inicioTopico else None
-
-            if inicioTopico and fimTopico:
-                textoTopico += texto[inicioTopico.end():fimTopico.start()]
-            elif inicioTopico:
-                textoTopico += texto[inicioTopico.end():]
-            elif fimTopico:
-                textoTopico += texto[:fimTopico.start()]
-        
         return textoTopico
+    
+    # def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
+    #     textoTopico = ''
+    #     # r'( \n)+\d+\.\d+\.\s+\w+' TESTAR ESSA FUNÇÃO
+    #     reFimTopico = r'\d.\d\s*objetivos?\b'
+    #     reComecoTopico = reTopico
+
+    #         inicioTopico = re.search(reTopico, texto)
+    #         fimTopico = re.search(reFimTopico[inicioTopico.end():], texto) if inicioTopico else None
+
+    #         if inicioTopico and fimTopico:
+    #             textoTopico += texto[inicioTopico.end():fimTopico.start()]
+    #         elif inicioTopico:
+    #             textoTopico += texto[inicioTopico.end():]
+    #         elif fimTopico:
+    #             textoTopico += texto[:fimTopico.start()]
+        
+    #     return textoTopico
+    
+    def __getTextoTopico(self, texto :str) -> str:
+        comecoTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
+        fimTopico = r'\d+\s+\w+'
+
+        inicioTopico = re.search(comecoTopico, texto)
+        fimTopico = re.search(fimTopico, texto[inicioTopico.end():])
+
+        if inicioTopico and fimTopico:
+            posicaoInicio = inicioTopico.end()
+            posicaoFim = fimTopico.start()
+
+            texto = texto[posicaoInicio: posicaoFim]
+
+        return texto
     
     def __limparPagina(self, texto :str) -> str:
         texto = texto.lower()
         texto = removerNumeroPagina(texto)
         texto = removerBarraN(texto)
         return texto
-
-
-    def __extrairProblema(self, pdfLido: object) -> str:
-        reTopico = r'introdução'
-
-        texto = self.__getTextoTopico(pdfLido, reTopico)
-
+    
+    def __procurarProblema(self, texto :str) -> str:
         reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados)\b'
         # pattern2 = r'\b\d+\s+\w+'
 
@@ -60,3 +74,12 @@ class Problema():
                     texto = texto[:posicao]
 
         return texto
+
+    def __extrairProblema(self, pdfLido: object) -> str:
+        reTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
+
+        paginasTopico = self.__sumario.getPaginasTopico(reTopico)
+        textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
+        textoTopcio = self.__getTextoTopico(textoPaginas)
+        problema = self.__procurarProblema(textoTopcio)
+        return problema
