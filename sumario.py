@@ -98,7 +98,8 @@ class Sumario:
     
     def __atualizarNumeracaoPaginas(self, dicionarioSumario :dict, atualizacao :int) -> dict:
         for keys, values in dicionarioSumario.items():
-            dicionarioSumario[keys] = values + atualizacao
+            if keys != 'ultima pagina':
+                dicionarioSumario[keys] = values + atualizacao
         return dicionarioSumario
     
     def __testarNumeracaoPaginas(self, pdfLido :str, dicionarioSumario :dict) -> bool:

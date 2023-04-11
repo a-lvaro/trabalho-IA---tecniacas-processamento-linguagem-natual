@@ -12,7 +12,7 @@ class Artigo():
         self.__sumario = Sumario(self.__pdfLido)
 
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
-        # self.__referencia = Referencia(self.__pdfLido, self.__sumario)
+        self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         # self.__problema = Problema(self.__pdfLido, self.__sumario)
         # self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
         self.__contribuicao = None
@@ -23,9 +23,9 @@ class Artigo():
     def getObjetivo(self) -> str:
         return self.__objetivo.getObjetivo()
     
-    # def getReferencia(self) -> list:
-    #     for referencia in self.__referencia.getReferencia():
-    #         print(referencia)
+    def getReferencia(self) -> list:
+        for referencia in self.__referencia.getReferencia():
+            print(referencia)
     
     # def getProblema(self) -> str:
     #     return self.__problema.getProblema()
@@ -34,12 +34,12 @@ class Artigo():
     #     return self.__metodologia.getMetodologia()
 
 
-artigo = Artigo('ArquivosTeste/TCC FINAL_Sandy.pdf')
+artigo = Artigo('ArquivosFuncionando/utilizacaoredesneuraisconvolucionais.pdf')
 print(artigo.getSumario())
 print('\n\n OBJETIVO')
 print(artigo.getObjetivo())
-# print('\n\n REFERÊNCIAS')
-# artigo.getReferencia()
+print('\n\n REFERÊNCIAS')
+artigo.getReferencia()
 # print('\n\n PROBLEMA')
 # print(artigo.getProblema())
 # print('\n\n METODOLOGIA')
