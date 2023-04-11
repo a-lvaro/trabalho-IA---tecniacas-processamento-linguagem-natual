@@ -26,7 +26,7 @@ class Sumario:
         reFimTopico = r'referências\s*\ .*\b'
         achouTopico = False
 
-        for ola, pagina in enumerate(pdfLido.pages):
+        for pagina in pdfLido.pages:
             paginaLida = pagina.extract_text()
             textoLimpo = limparTexto(paginaLida)
             
@@ -110,7 +110,7 @@ class Sumario:
         elif re.search(reTopico, pdfLido.pages[paginasTopico[0] + 1].extract_text()[:30].lower()):
             dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, 1)
         elif re.search(reTopico, pdfLido.pages[paginasTopico[0] - 1].extract_text()[:30].lower()):
-            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, 1)
+            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, -1)
         else:
             dicionarioSumario = None
 
