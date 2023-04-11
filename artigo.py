@@ -34,7 +34,7 @@ class Artigo():
     #     return self.__metodologia.getMetodologia()
 
 
-artigo = Artigo('ArquivosFuncionando/REDE_NEURAL_CONVOLUCIONAL_COM_DOIS_CANAIS_PARA_CLASSIFICACAO.pdf')
+artigo = Artigo('ArquivosFuncionando/utilizacaoredesneuraisconvolucionais.pdf')
 print(artigo.getSumario())
 print('\n\n OBJETIVO')
 print(artigo.getObjetivo())

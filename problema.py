@@ -19,31 +19,13 @@ class Problema():
 
         return textoTopico
     
-    # def __getTextoTopico(self, pdfLido: object, reTopico :re) -> str:
-    #     textoTopico = ''
-    #     # r'( \n)+\d+\.\d+\.\s+\w+' TESTAR ESSA FUNÇÃO
-    #     reFimTopico = r'\d.\d\s*objetivos?\b'
-    #     reComecoTopico = reTopico
-
-    #         inicioTopico = re.search(reTopico, texto)
-    #         fimTopico = re.search(reFimTopico[inicioTopico.end():], texto) if inicioTopico else None
-
-    #         if inicioTopico and fimTopico:
-    #             textoTopico += texto[inicioTopico.end():fimTopico.start()]
-    #         elif inicioTopico:
-    #             textoTopico += texto[inicioTopico.end():]
-    #         elif fimTopico:
-    #             textoTopico += texto[:fimTopico.start()]
-        
-    #     return textoTopico
-    
     def __getTextoTopico(self, texto :str) -> str:
         comecoTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
-        fimTopico = r'\d+\s+\w+'
+        fimTopico = r'[1-9]+\s+\w{4,}'
 
         inicioTopico = re.search(comecoTopico, texto)
         fimTopico = re.search(fimTopico, texto[inicioTopico.end():])
-
+        
         if inicioTopico and fimTopico:
             posicaoInicio = inicioTopico.end()
             posicaoFim = fimTopico.start()
@@ -59,8 +41,8 @@ class Problema():
         return texto
     
     def __procurarProblema(self, texto :str) -> str:
-        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados)\b'
-        # pattern2 = r'\b\d+\s+\w+'
+        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar)\b'
+        # reProblemaFim = r'\b\d+\s+\w+'
 
         match = re.search(reProblemaInicio, texto)
         if match:
@@ -80,6 +62,9 @@ class Problema():
 
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
-        textoTopcio = self.__getTextoTopico(textoPaginas)
-        problema = self.__procurarProblema(textoTopcio)
+        textoTopico = self.__getTextoTopico(textoPaginas)
+        # print('\n\n\n ----------------- Problema -----------------')
+        # print(textoTopico)
+        # print('---------------------------------- \n\n\n ')
+        problema = self.__procurarProblema(textoTopico)
         return problema
