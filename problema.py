@@ -11,17 +11,17 @@ class Problema():
         return self.__problema
     
     def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
-        textoTopico = ''
+        textoPagina = ''
         for posicao in range(paginasTopico[0], paginasTopico[1] + 1):
             texto = pdfLido.pages[posicao].extract_text()
             texto = self.__limparPagina(texto)
-            textoTopico += texto
+            textoPagina += texto
 
-        return textoTopico
+        return textoPagina
     
     def __getTextoTopico(self, texto :str) -> str:
         comecoTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
-        fimTopico = r'[1-9]+\s+\w{4,}'
+        fimTopico = r'[1-9]{1,2}\s+\w{5,}'
 
         inicioTopico = re.search(comecoTopico, texto)
         fimTopico = re.search(fimTopico, texto[inicioTopico.end():])
@@ -41,19 +41,19 @@ class Problema():
         return texto
     
     def __procurarProblema(self, texto :str) -> str:
-        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar)\b'
+        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo)\b'
+        reProblemaFim = r'\.'
         # reProblemaFim = r'\b\d+\s+\w+'
+
 
         match = re.search(reProblemaInicio, texto)
         if match:
             texto = texto[match.start():]
 
-            countPonto = 0
             for posicao, char in enumerate(texto):
                 if char == '.':
-                    countPonto += 1
-                if countPonto == 2:
-                    texto = texto[:posicao]
+                    return texto[:posicao + 1]
+
 
         return texto
 
