@@ -40,8 +40,8 @@ class Artigo():
 
 artigo = Artigo('ArquivosFuncionando/utilizacaoredesneuraisconvolucionais.pdf')
 # print(artigo.getSumario())
-# print('\n\n OBJETIVO')
-# print(artigo.getObjetivo())
+print('\n\n OBJETIVO')
+print(artigo.getObjetivo())
 # print('\n\n REFERÊNCIAS')
 # artigo.getReferencia()
 # print('\n\n PROBLEMA')
