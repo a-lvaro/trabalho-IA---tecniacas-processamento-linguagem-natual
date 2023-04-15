@@ -30,23 +30,37 @@ class Artigo():
     def getMetodologia(self) -> str:
         return self.__metodologia.getMetodologia()
     
+
     def getReferencia(self) -> list:
-        for referencia in self.__referencia.getReferencia():
-            print(referencia)
+        return self.__referencia.getReferencia()
 
     # def getContribuicao(self) -> str:
     #     return self.__contribuicao.getContribuicao()
+
+    def salvarArtigo(self) -> None:
+        texto = '|++|'
+
+        texto += self.getObjetivo()
+        texto += ';;' + self.getProblema()
+        texto += ';;' + self.getMetodologia()
+        texto += ';;' + self.getContribuicao()
+        texto += ';;' + '||'.join(self.getReferencia())
+
+        with open('dadosExtraidos.txt', 'a') as arquivo:
+            arquivo.write(texto)
 
 
 artigo = Artigo('ArquivosFuncionando/DAR20052019.pdf')
 # print(artigo.getSumario())
 # print('\n\n OBJETIVO')
 # print(artigo.getObjetivo())
-print('\n\n PROBLEMA')
-print(artigo.getProblema())
+# print('\n\n PROBLEMA')
+# print(artigo.getProblema())
 # print('\n\n METODOLOGIA')
 # print(artigo.getMetodologia())
 # print('\n\n REFERÊNCIAS')
 # artigo.getReferencia()
 # print('\n\n CONTRIBUIÇÃO')
 # print(artigo.getContribuicao())
+
+# artigo.salvarArtigo()
