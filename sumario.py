@@ -120,7 +120,7 @@ class Sumario:
     def __extrairSumario(self, pdfLido :object) -> dict:
         texto = self.__extrairTextoSumario(pdfLido)
         listaTextoPadronizado = self.__padronizarTexto(texto)
-        listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages)))
+        listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages) - 1))
         self.__sumario = dicionarioTextoPadronizado = self.__transformarEmDicionario(listaTextoPadronizado)
         return self.__testarNumeracaoPaginas(pdfLido, dicionarioTextoPadronizado)
 
