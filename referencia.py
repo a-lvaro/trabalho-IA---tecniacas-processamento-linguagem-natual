@@ -16,7 +16,7 @@ class Referencia():
         
         return dictPadroes
 
-    def __extrairReferencia(self, pdfLido: object) -> str:
+    def __extrairReferencia(self, pdfLido: object) -> list:
         textoTopico = self.__topico._getTopico(pdfLido)
         textoTopico = textoTopico.split('.  \n')        
 
