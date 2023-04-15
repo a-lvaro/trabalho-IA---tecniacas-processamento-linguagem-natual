@@ -1,6 +1,6 @@
 import re
 from sumario import Sumario
-from manipularPDF import removerNumeroPagina, removerPontuacao
+from manipularPDF import removerNumeroPagina, limparTexto
 
 class Metodologia():
     def __init__(self, pdfLido: object, sumario :Sumario) -> None:
@@ -10,27 +10,44 @@ class Metodologia():
     def getMetodologia(self) -> list:
         return self.__metodologia
     
-    def __getPagina(self, pdfLido: object) -> str:
-        texto = ''
+    def __getTextoTopico(self, texto :str) -> str:
+        comecoTopico = r'[0-9](\.|)\s*(m\s*e\s*t\s*o\s*d\s*o\s*l\s*o\s*g\s*i\s*a|m\s*é\s*t\s*o\s*d\s*o)'
+        fimTopico = r'\n(\d.+)\d\s\w+\b'
 
-        paginas = self.__sumario.getPaginasTopico(r'metodologia\b')
-        for posicao in range(paginas[0], paginas[1] + 1, 1):
-             if re.search(r'(\n)(\d.|)(\d.|)\d\s\w+', pdfLido.pages[posicao].extract_text()):
-                fim = re.search(r'(\n)(\d.|)(\d.|)\d\s\w+', pdfLido.pages[posicao].extract_text()).start()
-                texto += removerNumeroPagina(pdfLido.pages[posicao].extract_text()[:fim])
-             else:
-                 texto += removerNumeroPagina(pdfLido.pages[posicao].extract_text())
+        inicioTopico = re.search(comecoTopico, texto)
+        fimTopico = re.search(fimTopico, texto[inicioTopico.end():])
+        print(inicioTopico)
+        print(fimTopico)
+
+
+        if inicioTopico and fimTopico:
+            posicaoInicio = inicioTopico.end()
+            posicaoFim = fimTopico.start()
+
+            texto = texto[posicaoInicio: posicaoInicio + posicaoFim]
 
         return texto
     
-    def __extrairMetodologia(self, pdfLido: object) -> str:
-        pagina = self.__getPagina(pdfLido)
-        pagina = removerPontuacao(pagina)
+    def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
+        textoTopico = ''
+        for posicao in range(paginasTopico[0], paginasTopico[1] + 1):
+            texto = pdfLido.pages[posicao].extract_text()
+            texto = self.__limparPagina(texto)
+            textoTopico += texto
 
-        pagina = pagina.lower().split(' metodologia  \n')[1]
-        pagina = pagina.split('.  \n')
+        return textoTopico
 
-        pagina = [metodologia.replace(
-            '\n', '') for metodologia in pagina]
-
+    def __limparPagina(self, pagina :str) -> str:
+        pagina = pagina.lower()
+        pagina = removerNumeroPagina(pagina)
         return pagina
+
+    
+    def __extrairMetodologia(self, pdfLido: object) -> str:
+        reTopico = r'metodologia\b'
+
+        paginasTopico = self.__sumario.getPaginasTopico(reTopico)
+        textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
+        textoTopico = self.__getTextoTopico(textoPaginas)
+
+        return textoTopico

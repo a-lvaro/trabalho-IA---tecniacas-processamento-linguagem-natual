@@ -15,7 +15,7 @@ class Artigo():
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
         self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         self.__problema = Problema(self.__pdfLido, self.__sumario)
-        # self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
+        self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
         # self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
@@ -31,8 +31,8 @@ class Artigo():
     def getProblema(self) -> str:
         return self.__problema.getProblema()
     
-    # def getMetodologia(self) -> str:
-    #     return self.__metodologia.getMetodologia()
+    def getMetodologia(self) -> str:
+        return self.__metodologia.getMetodologia()
 
     # def getContribuicao(self) -> str:
     #     return self.__contribuicao.getContribuicao()
@@ -46,7 +46,7 @@ artigo = Artigo('ArquivosFuncionando/utilizacaoredesneuraisconvolucionais.pdf')
 # artigo.getReferencia()
 # print('\n\n PROBLEMA')
 # print(artigo.getProblema())
-# print('\n\n METODOLOGIA')
-# print(artigo.getMetodologia())
+print('\n\n METODOLOGIA')
+print(artigo.getMetodologia())
 # print('\n\n CONTRIBUIÇÃO')
 # print(artigo.getContribuicao())
