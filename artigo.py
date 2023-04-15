@@ -13,9 +13,9 @@ class Artigo():
         self.__sumario = Sumario(self.__pdfLido)
 
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
-        self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         self.__problema = Problema(self.__pdfLido, self.__sumario)
         self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
+        # self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         # self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
@@ -24,29 +24,29 @@ class Artigo():
     def getObjetivo(self) -> str:
         return self.__objetivo.getObjetivo()
     
-    def getReferencia(self) -> list:
-        for referencia in self.__referencia.getReferencia():
-            print(referencia)
-    
     def getProblema(self) -> str:
         return self.__problema.getProblema()
     
     def getMetodologia(self) -> str:
         return self.__metodologia.getMetodologia()
+    
+    # def getReferencia(self) -> list:
+    #     for referencia in self.__referencia.getReferencia():
+    #         print(referencia)
 
     # def getContribuicao(self) -> str:
     #     return self.__contribuicao.getContribuicao()
 
 
-artigo = Artigo('ArquivosFuncionando/utilizacaoredesneuraisconvolucionais.pdf')
-# print(artigo.getSumario())
+artigo = Artigo('talvez/MarkCappelloFerreiradeSousaCorr19.pdf')
+print(artigo.getSumario())
 # print('\n\n OBJETIVO')
 # print(artigo.getObjetivo())
-print('\n\n REFERÊNCIAS')
-artigo.getReferencia()
 # print('\n\n PROBLEMA')
 # print(artigo.getProblema())
-# print('\n\n METODOLOGIA')
-# print(artigo.getMetodologia())
+print('\n\n METODOLOGIA')
+print(artigo.getMetodologia())
+# print('\n\n REFERÊNCIAS')
+# artigo.getReferencia()
 # print('\n\n CONTRIBUIÇÃO')
 # print(artigo.getContribuicao())
