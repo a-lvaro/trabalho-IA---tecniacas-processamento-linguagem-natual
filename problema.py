@@ -1,6 +1,6 @@
 import re
 from sumario import Sumario
-from manipularPDF import removerNumeroPagina, removerPontuacao, removerBarraN
+from manipularPDF import removerNumeroPagina, removerBarraN
 
 class Problema():
     def __init__(self, pdfLido: object, sumario: Sumario) -> None:

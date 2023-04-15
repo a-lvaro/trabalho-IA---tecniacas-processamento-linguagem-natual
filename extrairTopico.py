@@ -3,9 +3,9 @@ from sumario import Sumario
 from manipularPDF import removerNumeroPagina
 
 class ExtrairTopico():
-    def __init__(self, sumario :Sumario, reNomeTopico :re) -> None:
+    def __init__(self, sumario :Sumario, rePadroes :dict) -> None:
         self.__sumario = sumario
-        self.__reNomeTopico = reNomeTopico
+        self.__rePadroes = rePadroes
 
     def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
         textoTopico = ''
@@ -21,11 +21,9 @@ class ExtrairTopico():
         pagina = removerNumeroPagina(pagina)
         return pagina
     
-    def __getTextoTopico(self, texto :str, comecoTopico :re) -> str:
-        fimTopico = r'\n(\d.+)\d\s\w+\b'
-
-        inicioTopico = re.search(comecoTopico, texto)
-        fimTopico = re.search(fimTopico, texto[inicioTopico.end():])
+    def __getTextoTopico(self, texto :str) -> str:
+        inicioTopico = re.search(self.__rePadroes['reComecoTopico'], texto)
+        fimTopico = re.search(self.__rePadroes['reFimTopico'], texto[inicioTopico.end():])
 
         if inicioTopico and fimTopico:
             posicaoInicio = inicioTopico.end()
@@ -36,9 +34,9 @@ class ExtrairTopico():
         return texto
 
     
-    def _getTopico(self, pdfLido: object, reComecoTopico :re) -> str:
-        paginasTopico = self.__sumario.getPaginasTopico(self.__reNomeTopico)
+    def _getTopico(self, pdfLido: object) -> str:
+        paginasTopico = self.__sumario.getPaginasTopico(self.__rePadroes['topico'])
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
-        textoTopico = self.__getTextoTopico(textoPaginas, reComecoTopico)
+        textoTopico = self.__getTextoTopico(textoPaginas)
 
         return textoTopico

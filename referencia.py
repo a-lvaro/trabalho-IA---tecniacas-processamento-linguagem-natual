@@ -1,15 +1,24 @@
 import re
 from sumario import Sumario
 from manipularPDF import removerNumeroPagina
+# from extrairTopico import ExtrairTopico
 
 
 class Referencia():
     def __init__(self, pdfLido: object, sumario :Sumario) -> None:
         self.__sumario = sumario
+        # self.__topico = ExtrairTopico(sumario, self.__getPadroes())
         self.__referencia = self.__extrairReferencia(pdfLido)
 
     def getReferencia(self) -> list:
         return self.__referencia
+    
+    # def __getPadroes(self):
+    #     dictPadroes = {'topico': r'referências\b',
+    #                    'reComecoTopico': r'referências\b',
+    #                    'reFimTopico': r'\s*(apêndice|anexo)'}
+        
+    #     return dictPadroes
 
     def __getTextoPaginas(self, pdfLido: object, paginasTopico :list) -> str:
         textoTopico = ''
@@ -43,6 +52,8 @@ class Referencia():
 
     def __extrairReferencia(self, pdfLido: object) -> str:
         reTopico = r'referências\b'
+
+        # textoTopico = self.__topico._getTopico(pdfLido)
 
         paginasTopico = self.__sumario.getPaginasTopico(reTopico)
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)

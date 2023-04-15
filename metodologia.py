@@ -3,14 +3,20 @@ from extrairTopico import ExtrairTopico
 
 class Metodologia():
     def __init__(self, pdfLido: object, sumario :Sumario) -> None:
-        self.__extrairTopico = ExtrairTopico(sumario, r'metodologia\b')
+        self.__topico = ExtrairTopico(sumario, self.__getPadroes())
         self.__metodologia = self.__extrairMetodologia(pdfLido)
 
-    def getMetodologia(self) -> list:
+    def getMetodologia(self) -> str:
         return self.__metodologia
     
+    def __getPadroes(self):
+        dictPadroes = {'topico': r'metodologia\b',
+                      'reComecoTopico': r'[0-9](\.|)\s*(m\s*e\s*t\s*o\s*d\s*o\s*l\s*o\s*g\s*i\s*a|m\s*é\s*t\s*o\s*d\s*o)',
+                      'reFimTopico': r'\n(\d.+)\d\s\w+\b'}
+        
+        return dictPadroes
+    
     def __extrairMetodologia(self, pdfLido: object) -> str:
-        reComecoTopico = r'[0-9](\.|)\s*(m\s*e\s*t\s*o\s*d\s*o\s*l\s*o\s*g\s*i\s*a|m\s*é\s*t\s*o\s*d\s*o)'
-        textoTopico = self.__extrairTopico._getTopico(pdfLido, reComecoTopico)
+        textoTopico = self.__topico._getTopico(pdfLido)
 
         return textoTopico
