@@ -19,7 +19,7 @@ class Problema():
         return dictPadroes
     
     def __procurarProblema(self, texto :str) -> str:
-        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo)\b'
+        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo|nesse contexto|a fim de aumentar|é muito comum)\b'
         reProblemaFim = r'\.'
 
 

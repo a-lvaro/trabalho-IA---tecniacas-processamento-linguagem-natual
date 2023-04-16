@@ -17,8 +17,8 @@ class Contribuicao():
         return dictPadroes
     
     def __procurarContribuicao(self, texto: str) -> str:
-        reProblemaInicio = r'(criou\s*uma\s*base\s*de\s*dados|executou-se\s*dois\s*experimentos|discutiu-se\s*a\s*variação)\b'
-        reProblemaFim = r'\.'
+        reProblemaInicio = r'(criou\s*uma\s*base\s*de\s*dados|executou-se\s*dois\s*experimentos|discutiu-se\s*a\s*variação|foi\s*proposto\s*um\s*modelo|neste\s*trabalho)\b'
+        reProblemaFim = r'^(?:[^.]*\.){1}[^.]*\.' # identifica a segunda ocorrência de um ponto
 
         inicio = re.search(reProblemaInicio, texto)
         fim = re.search(reProblemaFim, texto[inicio.end():])
