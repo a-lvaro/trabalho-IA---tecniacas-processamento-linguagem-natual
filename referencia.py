@@ -12,7 +12,7 @@ class Referencia():
     def __getPadroes(self):
         dictPadroes = {'topico': r'referências\b',
                        'reComecoTopico': r'referências\b',
-                       'reFimTopico': r'\s*(apêndice|anexo)\b'}
+                       'reFimTopico': r'\s*(apêndice(|s)|anexo)\b'}
         
         return dictPadroes
 
