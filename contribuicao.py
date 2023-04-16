@@ -19,7 +19,7 @@ class Contribuicao():
     
     def __procurarContribuicao(self, texto: str) -> str:
         # neste\s*trabalho
-        reProblemaInicio = r'(criou\s*uma\s*base\s*de\s*dados|executou-se\s*dois\s*experimentos|estes resultados apresentados, comprovam|discutiu-se\s*a\s*variação|foi\s*proposto\s*um\s*modelo|neste trabalho, propusemos|neste  trabalho  foi utilizado  técnicas)\b'
+        reProblemaInicio = r'(criou\s*uma\s*base\s*de\s*dados|executou-se\s*dois\s*experimentos|estes resultados apresentados, comprovam|discutiu-se\s*a\s*variação|foi\s*proposto\s*um\s*modelo|neste trabalho, propusemos|neste  trabalho  foi utilizado  técnicas|mesmo sendo uma técnica promissora)\b'
         reProblemaFim = r'^(?:[^.]*\.){1}[^.]*\.' # identifica a segunda ocorrência de um ponto
 
         inicio = re.search(reProblemaInicio, texto)
