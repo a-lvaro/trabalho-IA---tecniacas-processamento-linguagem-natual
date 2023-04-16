@@ -11,10 +11,10 @@ class Problema():
     def getProblema(self) -> str:
         return self.__problema
     
-    def __getPadroes(self):
+    def __getPadroes(self) -> dict:
         dictPadroes = {'topico': r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o',
                       'reComecoTopico': r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o',
-                      'reFimTopico':  r'[1-9]{1,2}\s+\w{5,}'}
+                      'reFimTopico':  r'\n(\d.+)\d(\.|)\s\w+\b'}
         
         return dictPadroes
     
@@ -22,14 +22,11 @@ class Problema():
         reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo)\b'
         reProblemaFim = r'\.'
 
-        match = re.search(reProblemaInicio, texto)
-        if match:
-            texto = texto[match.start():]
 
-            for posicao, char in enumerate(texto):
-                if char == '.':
-                    return texto[:posicao + 1]
-
+        inicio = re.search(reProblemaInicio, texto)
+        fim = re.search(reProblemaFim, texto[inicio.end():])
+        
+        texto = texto[inicio.start():inicio.end() + fim.end()]
         return texto
 
     def __extrairProblema(self, pdfLido: object) -> str:
