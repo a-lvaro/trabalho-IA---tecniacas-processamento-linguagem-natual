@@ -23,7 +23,14 @@ class ExtrairTopico():
     
     def __getTextoTopico(self, texto :str) -> str:
         inicioTopico = re.search(self.__rePadroes['reComecoTopico'], texto)
+        # print(self.__rePadroes['reComecoTopico'])
+        # print(inicioTopico)
         fimTopico = re.search(self.__rePadroes['reFimTopico'], texto[inicioTopico.end():])
+
+        # print('||||||||||||||||||||||')
+        # print(inicioTopico)
+        # print(fimTopico)
+        # print('||||||||||||||||||||||')
 
         if inicioTopico and fimTopico:
             posicaoInicio = inicioTopico.end()
