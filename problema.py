@@ -19,7 +19,7 @@ class Problema():
         return dictPadroes
     
     def __procurarProblema(self, texto :str) -> str:
-        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo|nesse contexto|a fim de aumentar|é muito comum|no brasil, o diagnóstico de sintomas|mas a partir dos anos 2000)\b'
+        reProblemaInicio = r'((resolver|solucioner) o problema|estudos estão sendo realizados|pretende-se gerar|pesquisa investigou|acreditamos que um estudo|projetar um\s*algoritmo|nesse contexto|a fim de aumentar|é muito comum|no brasil, o diagnóstico de sintomas|mas a partir dos anos 2000|até o presente momento não foi desenvolvida)\b'
         reProblemaFim = r'^(?:[^.]*\.){1}[^.]*\.'
 
 

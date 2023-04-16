@@ -10,9 +10,9 @@ class Metodologia():
         return self.__metodologia
     
     def __getPadroes(self):
-        dictPadroes = {'topico': r'm[eé]todo(logia|)\b',
+        dictPadroes = {'topico': r'm[eé]todo(logia|s|)\b',
                       'reComecoTopico': r'[0-9](\.|)\s*(m\s*[eé]\s*t\s*o\s*d\s*o\s*(l\s*o\s*g\s*i\s*a|))',
-                      'reFimTopico': r'\n(\d.+)\d(\.|)\s\w+\b'}
+                      'reFimTopico': r'\n(\d.+)\d(\.|)\s*\w+\b'}
         
         
         return dictPadroes

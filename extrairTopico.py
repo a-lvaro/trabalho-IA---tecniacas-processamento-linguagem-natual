@@ -44,10 +44,10 @@ class ExtrairTopico():
     def _getTopico(self, pdfLido: object) -> str:
         paginasTopico = self.__sumario.getPaginasTopico(self.__rePadroes['topico'])
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
+        textoTopico = self.__getTextoTopico(textoPaginas)
         # print('++++++++++++++++++++++++++=')
         # print(self.__rePadroes['topico'])
-        # print(textoPaginas)
+        # print(textoTopico)
         # print('++++++++++++++++++++++++++=')
-        textoTopico = self.__getTextoTopico(textoPaginas)
 
         return textoTopico

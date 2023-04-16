@@ -16,7 +16,7 @@ class Artigo():
         self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
         self.__problema = Problema(self.__pdfLido, self.__sumario)
         self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
-        # self.__referencia = Referencia(self.__pdfLido, self.__sumario)
+        self.__referencia = Referencia(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
         return self.__sumario.getSumario()
@@ -33,23 +33,23 @@ class Artigo():
     def getContribuicao(self) -> str:
         return self.__contribuicao.getContribuicao()
 
-    # def getReferencia(self) -> list:
-    #     return self.__referencia.getReferencia()
+    def getReferencia(self) -> list:
+        return self.__referencia.getReferencia()
 
-    # def salvarArtigo(self) -> None:
-    #     texto = '|++|'
+    def salvarArtigo(self) -> None:
+        texto = '|++|'
 
-    #     texto += self.getObjetivo()
-    #     texto += ';;' + self.getProblema()
-    #     texto += ';;' + self.getMetodologia()
-    #     # texto += ';;' + self.getContribuicao()
-    #     texto += ';;' + '||'.join(self.getReferencia())
+        texto += self.getObjetivo()
+        texto += ';;' + self.getProblema()
+        texto += ';;' + self.getMetodologia()
+        # texto += ';;' + self.getContribuicao()
+        texto += ';;' + '||'.join(self.getReferencia())
 
-    #     with open('dadosExtraidos.txt', 'a') as arquivo:
-            # arquivo.write(texto)
+        with open('dadosExtraidos.txt', 'a') as arquivo:
+            arquivo.write(texto)
 
 
-artigo = Artigo('nao testados/RedesNeuraisConvolucionais.pdf')
+artigo = Artigo('nao testados/DISSERTAÇÃO_SistemaDetecçãoEstradas.pdf')
 print(artigo.getSumario())
 print('\n\n OBJETIVO') 
 print(artigo.getObjetivo())
