@@ -32,7 +32,7 @@ def on_button_click(arquivo: str):
     button1 = tk.Button(new_window, text="Botão 1")
     button1.pack()
     
-    button2 = tk.Button(new_window, text="Botão 2")
+    button2 = tk.Button(new_window, text="Voltar")
     button2.pack()
 
 
