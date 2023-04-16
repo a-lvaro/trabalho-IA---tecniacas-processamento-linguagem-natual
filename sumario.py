@@ -20,40 +20,42 @@ class Sumario:
                 return posicaoPaginas
                 
 
-    def __extrairTextoSumario(self, pdfLido :object) -> str:
+    def __extrairTextoSumario(self, pdfLido :object) -> list:
         textoFinal = ''
         reInicioTopico =  r'sum\s*á\s*rio'
         reFimTopico = r'referências\s*\ .*\b'
         achouTopico = False
+        posicaoSumario = None
 
-        for pagina in pdfLido.pages:
+        for posicao, pagina in enumerate(pdfLido.pages):
             paginaLida = pagina.extract_text()
             textoLimpo = limparTexto(paginaLida)
             
             inicioTopico = re.search(reInicioTopico, textoLimpo[:30])
             fimTopico = re.search(reFimTopico, textoLimpo)
 
-
             if inicioTopico and fimTopico:
                 inicio = inicioTopico.end()
                 fim = fimTopico.end()
                 textoFinal = textoLimpo[inicio:fim]
-                return textoFinal
+                posicaoSumario = posicao
+                return textoFinal, posicaoSumario
 
             elif inicioTopico:
                 inicio = inicioTopico.end()
                 textoFinal = textoLimpo[inicio:]
                 achouTopico = True
+                posicaoSumario = posicao
 
             elif fimTopico and achouTopico:
                 fim = fimTopico.end()
                 textoFinal += textoLimpo[:fim]
-                return textoFinal
+                return textoFinal, posicaoSumario
             
             elif achouTopico:
                 textoFinal += textoLimpo
         
-        return None
+        return None, None
     
     def __excluirNumeracaoSumario(self, texto :str) -> str:
         texto = re.sub(r'\d+\.\s*', '', texto)
@@ -106,20 +108,28 @@ class Sumario:
         reTopico = r'i\s*n\s*t\s*r\s*o\s*d\s*u\s*ç\s*ã\s*o'
         paginasTopico = self.getPaginasTopico(reTopico)
 
-        if re.search(reTopico, pdfLido.pages[paginasTopico[0]].extract_text()[:30].lower()):
+        if re.search(reTopico, pdfLido.pages[paginasTopico[0]].extract_text()[:30].lower()) and dicionarioSumario['sumario'] != paginasTopico[0]:
             dicionarioSumario = dicionarioSumario
-        elif re.search(reTopico, pdfLido.pages[paginasTopico[0] + 1].extract_text()[:30].lower()):
-            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, 1)
-        elif re.search(reTopico, pdfLido.pages[paginasTopico[0] - 1].extract_text()[:30].lower()):
-            dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, -1)
         else:
-            dicionarioSumario = None
+            naoEcontrou = True
+            posicaoContador = dicionarioSumario['sumario'] + 1
+            # print('========================')
+            # print(dicionarioSumario['sumario'])
+            # print(posicaoContador)
+            # print('========================')
+            while naoEcontrou:
+                pagina = pdfLido.pages[posicaoContador].extract_text()
+                if re.search(reTopico, pagina[:30].lower()):
+                    dicionarioSumario = self.__atualizarNumeracaoPaginas(dicionarioSumario, posicaoContador - paginasTopico[0])
+                    naoEcontrou = False
+                posicaoContador += 1
 
         return dicionarioSumario
 
     def __extrairSumario(self, pdfLido :object) -> dict:
-        texto = self.__extrairTextoSumario(pdfLido)
+        texto, posicaoSumario = self.__extrairTextoSumario(pdfLido)
         listaTextoPadronizado = self.__padronizarTexto(texto)
+        listaTextoPadronizado.append('sumario         ' + str(posicaoSumario))
         listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages) - 1))
         self.__sumario = dicionarioTextoPadronizado = self.__transformarEmDicionario(listaTextoPadronizado)
         return self.__testarNumeracaoPaginas(pdfLido, dicionarioTextoPadronizado)
