@@ -11,8 +11,8 @@ class Objetivo():
     
     def __getPadroes(self):
         dictPadroes = {'topico': r'objetivo(|s)(?:\sgera(l|is))?\b',
-                      'reComecoTopico': r'[0-9](\.|)\sobjetivo(|s)(?:\sgera(l|is))?\b',
-                      'reFimTopico': r'\n(\d.+)\d(\.|)\s\w+\b'}
+                      'reComecoTopico': r'[0-9](\.|)\s*objetivo(|s)(?:\sgera(l|is))?\b',
+                      'reFimTopico': r'\n(\d.+|)\d(\.|)\s*\w+\b'}
         
         return dictPadroes
 
