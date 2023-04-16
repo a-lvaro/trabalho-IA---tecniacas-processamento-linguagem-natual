@@ -23,14 +23,7 @@ class ExtrairTopico():
     
     def __getTextoTopico(self, texto :str) -> str:
         inicioTopico = re.search(self.__rePadroes['reComecoTopico'], texto)
-        # print(self.__rePadroes['reComecoTopico'])
-        # print(inicioTopico)
         fimTopico = re.search(self.__rePadroes['reFimTopico'], texto[inicioTopico.end():])
-
-        # print('||||||||||||||||||||||')
-        # print(inicioTopico)
-        # print(fimTopico)
-        # print('||||||||||||||||||||||')
 
         if inicioTopico and fimTopico:
             posicaoInicio = inicioTopico.end()
@@ -45,9 +38,5 @@ class ExtrairTopico():
         paginasTopico = self.__sumario.getPaginasTopico(self.__rePadroes['topico'])
         textoPaginas = self.__getTextoPaginas(pdfLido, paginasTopico)
         textoTopico = self.__getTextoTopico(textoPaginas)
-        # print('++++++++++++++++++++++++++=')
-        # print(self.__rePadroes['topico'])
-        # print(textoTopico)
-        # print('++++++++++++++++++++++++++=')
 
         return textoTopico

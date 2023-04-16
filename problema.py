@@ -31,8 +31,5 @@ class Problema():
 
     def __extrairProblema(self, pdfLido: object) -> str:
         textoTopico = self.__topico._getTopico(pdfLido)
-        print("========================")
-        print(textoTopico)
-        print("========================")
         problema = self.__procurarProblema(textoTopico)
         return problema

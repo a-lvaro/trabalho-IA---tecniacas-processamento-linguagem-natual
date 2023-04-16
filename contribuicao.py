@@ -25,18 +25,10 @@ class Contribuicao():
         inicio = re.search(reProblemaInicio, texto)
         fim = re.search(reProblemaFim, texto[inicio.end():])
 
-        print('\n\n\n')
-        print(inicio)
-        print(fim)
-        print('\n\n\n')
-
         texto = texto[inicio.start():inicio.end() + fim.end()]
         return texto
     
     def __extrairContribuicao(self, pdfLido: object) -> str:
         textoTopico = self.__topico._getTopico(pdfLido)
-        print('++++++++++++++++++')
-        print(textoTopico)
-        print('++++++++++++++++++')
         contribuicao = self.__procurarContribuicao(textoTopico)
         return contribuicao

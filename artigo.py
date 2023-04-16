@@ -42,14 +42,14 @@ class Artigo():
         texto += self.getObjetivo()
         texto += ';;' + self.getProblema()
         texto += ';;' + self.getMetodologia()
-        # texto += ';;' + self.getContribuicao()
+        texto += ';;' + self.getContribuicao()
         texto += ';;' + '||'.join(self.getReferencia())
 
         with open('dadosExtraidos.txt', 'a') as arquivo:
             arquivo.write(texto)
 
 
-artigo = Artigo('nao testados/DISSERTAÇÃO_SistemaDetecçãoEstradas.pdf')
+artigo = Artigo('artigos/CLASSIFICAÇÃO DE VEÍCULOS BASEADA EM DEEP LEARNING PARA APLICAÇÃO EM SEMÁFOROS INTELIGENTES LAVRAS – MG 2021.pdf')
 print(artigo.getSumario())
 print('\n\n OBJETIVO') 
 print(artigo.getObjetivo())
