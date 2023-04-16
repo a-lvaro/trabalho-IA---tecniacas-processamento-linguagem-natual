@@ -13,9 +13,9 @@ class Artigo():
         self.__sumario = Sumario(self.__pdfLido)
 
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
-        self.__problema = Problema(self.__pdfLido, self.__sumario)
         self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
-        self.__referencia = Referencia(self.__pdfLido, self.__sumario)
+        # self.__problema = Problema(self.__pdfLido, self.__sumario)
+        # self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         # self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
@@ -24,40 +24,39 @@ class Artigo():
     def getObjetivo(self) -> str:
         return self.__objetivo.getObjetivo()
     
-    def getProblema(self) -> str:
-        return self.__problema.getProblema()
-    
     def getMetodologia(self) -> str:
         return self.__metodologia.getMetodologia()
     
+    # def getProblema(self) -> str:
+    #     return self.__problema.getProblema()
 
-    def getReferencia(self) -> list:
-        return self.__referencia.getReferencia()
+    # def getReferencia(self) -> list:
+    #     return self.__referencia.getReferencia()
 
     # def getContribuicao(self) -> str:
     #     return self.__contribuicao.getContribuicao()
 
-    def salvarArtigo(self) -> None:
-        texto = '|++|'
+    # def salvarArtigo(self) -> None:
+    #     texto = '|++|'
 
-        texto += self.getObjetivo()
-        texto += ';;' + self.getProblema()
-        texto += ';;' + self.getMetodologia()
-        texto += ';;' + self.getContribuicao()
-        texto += ';;' + '||'.join(self.getReferencia())
+    #     texto += self.getObjetivo()
+    #     texto += ';;' + self.getProblema()
+    #     texto += ';;' + self.getMetodologia()
+    #     # texto += ';;' + self.getContribuicao()
+    #     texto += ';;' + '||'.join(self.getReferencia())
 
-        with open('dadosExtraidos.txt', 'a') as arquivo:
-            arquivo.write(texto)
+    #     with open('dadosExtraidos.txt', 'a') as arquivo:
+            # arquivo.write(texto)
 
 
-artigo = Artigo('ArquivosFuncionando/DAR20052019.pdf')
-# print(artigo.getSumario())
-# print('\n\n OBJETIVO')
-# print(artigo.getObjetivo())
+artigo = Artigo('nao testados/CLASSIFICAÇÃO DE VEÍCULOS BASEADA EM DEEP LEARNING PARA APLICAÇÃO EM SEMÁFOROS INTELIGENTES LAVRAS – MG 2021.pdf')
+print(artigo.getSumario())
+print('\n\n OBJETIVO') 
+print(artigo.getObjetivo())
+print('\n\n METODOLOGIA')
+print(artigo.getMetodologia())
 # print('\n\n PROBLEMA')
 # print(artigo.getProblema())
-# print('\n\n METODOLOGIA')
-# print(artigo.getMetodologia())
 # print('\n\n REFERÊNCIAS')
 # artigo.getReferencia()
 # print('\n\n CONTRIBUIÇÃO')
