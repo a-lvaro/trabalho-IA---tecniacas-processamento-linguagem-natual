@@ -15,8 +15,8 @@ class Artigo():
         self.__objetivo = Objetivo(self.__pdfLido, self.__sumario)
         self.__metodologia = Metodologia(self.__pdfLido, self.__sumario)
         # self.__problema = Problema(self.__pdfLido, self.__sumario)
-        # self.__referencia = Referencia(self.__pdfLido, self.__sumario)
         # self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
+        self.__referencia = Referencia(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
         return self.__sumario.getSumario()
@@ -30,11 +30,11 @@ class Artigo():
     # def getProblema(self) -> str:
     #     return self.__problema.getProblema()
 
-    # def getReferencia(self) -> list:
-    #     return self.__referencia.getReferencia()
-
     # def getContribuicao(self) -> str:
     #     return self.__contribuicao.getContribuicao()
+
+    def getReferencia(self) -> list:
+        return self.__referencia.getReferencia()
 
     # def salvarArtigo(self) -> None:
     #     texto = '|++|'
@@ -57,9 +57,10 @@ print('\n\n METODOLOGIA')
 print(artigo.getMetodologia())
 # print('\n\n PROBLEMA')
 # print(artigo.getProblema())
-# print('\n\n REFERÊNCIAS')
-# artigo.getReferencia()
 # print('\n\n CONTRIBUIÇÃO')
 # print(artigo.getContribuicao())
+print('\n\n REFERÊNCIAS')
+for i in artigo.getReferencia():
+    print(i)
 
 # artigo.salvarArtigo()

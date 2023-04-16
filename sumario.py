@@ -100,7 +100,7 @@ class Sumario:
     
     def __atualizarNumeracaoPaginas(self, dicionarioSumario :dict, atualizacao :int) -> dict:
         for keys, values in dicionarioSumario.items():
-            if keys != 'ultima pagina':
+            if keys != 'ultima pagina' and keys != 'sumario':
                 dicionarioSumario[keys] = values + atualizacao
         return dicionarioSumario
     
@@ -128,8 +128,10 @@ class Sumario:
 
     def __extrairSumario(self, pdfLido :object) -> dict:
         texto, posicaoSumario = self.__extrairTextoSumario(pdfLido)
+        # print(posicaoSumario)
+        # print(texto)
         listaTextoPadronizado = self.__padronizarTexto(texto)
-        listaTextoPadronizado.append('sumario         ' + str(posicaoSumario))
+        listaTextoPadronizado.insert(0, 'sumario         ' + str(posicaoSumario))
         listaTextoPadronizado.append('ultima pagina         ' + str(len(pdfLido.pages) - 1))
         self.__sumario = dicionarioTextoPadronizado = self.__transformarEmDicionario(listaTextoPadronizado)
         return self.__testarNumeracaoPaginas(pdfLido, dicionarioTextoPadronizado)
