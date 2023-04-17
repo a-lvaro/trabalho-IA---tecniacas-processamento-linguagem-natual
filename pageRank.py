@@ -50,14 +50,10 @@ def contadorPaginas(nome_artigo):
     with open(nome_artigo, 'rb') as article:
         pdf_reader = PyPDF2.PdfReader(article)
         paginas = len(pdf_reader.pages)
-    print("A quantidade de páginas")
-    print(paginas)
     return paginas
 
 def listagemArquivos(caminho_pasta):
     lista_arquivos = os.listdir(caminho_pasta)
-    print("Os arquivos:")
-    print(lista_arquivos)
     return lista_arquivos
 
 
@@ -68,56 +64,37 @@ def arquivosEntrada(nome_artigo):
     documentos = listagemArquivos(pasta)
     titulo = nome_artigo.split('/')[1]
     titulo = titulo[:-4].lower()
-    print('aaaaaaaaaaaaaaaaaaaaa')
-    print(titulo)
     for documento in documentos:
         referencia = artigo.getReferencia()
         for item in referencia:
             minusculo = item.lower()
             if titulo in minusculo:
                 nome_artigo_novo = pasta + '/' + documento
-                print('AQUI O NOVO ARTIGO Ó:', nome_artigo_novo)
                 arquivos_que_referenciam.append(nome_artigo_novo)
-            else:
-                print('título não encontrado na referencia')
     return arquivos_que_referenciam
-
-
 
 # Alguns artigos retornam apenas 1 lista com 1 string ;-;
 # Um outro contou 101, sendo que são 115
 def contLinkSaida(artigo):
     numRef = len(artigo.getReferencia())
-    print("Referenciou")
-    print(numRef)
     return numRef
 
 def localizar_pasta(nome_artigo):
     caminho_pasta = nome_artigo.split('/')[0]
-    print("Nome da pasta: ")
-    print(caminho_pasta)
     return caminho_pasta
 
-endereco = 'artigos'
-pasta = listagemArquivos(endereco)
-rank = dict()
-for arquivo in pasta:
-    nome_documento = endereco + '/' + arquivo
-    print(nome_documento)
-    pontuacao = pageRank(nome_documento)
-    rank[arquivo] = pontuacao
+def rankingDasPaginas(pasta): # pasta = 'artigos'
+    endereco = pasta
+    pasta = listagemArquivos(endereco)
+    rank = dict()
+    for arquivo in pasta:
+        nome_documento = endereco + '/' + arquivo
+        print(nome_documento)
+        pontuacao = pageRank(nome_documento)
+        rank[arquivo] = pontuacao
 
-rank_ordenado = sorted(rank.items(), key=lambda x: x[1], reverse=True)
-for item in rank_ordenado:
-    print('NOME: ', item[0], 'NOTA: ', item[1])
+    rank_ordenado = sorted(rank.items(), key=lambda x: x[1], reverse=True)
+    return rank_ordenado
 
+# print(rankingDasPaginas('artigos'))
 
-
-
-# pageRank(nome_artigo)
-
-
-#O numero de referencias nao esta retornando o que deve (115) :(
-# contLinkSaida(text)
-
-# linkSaida(text)

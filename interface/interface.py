@@ -4,6 +4,7 @@ import os
 import sys
 sys.path.insert(0, './')
 from artigo import Artigo
+from pageRank import rankingDasPaginas
 
 def nomesArquivos() -> list:
     dir_path = 'artigos'
@@ -96,7 +97,10 @@ combobox.pack()
 button = tk.Button(root, text="extrair dados", command=lambda: telaExtracaoArtigo(combobox.get()))
 button.pack()
 
-button = tk.Button(root, text="Sair", command=root.destroy)
-button.pack()
+buttonPageRank = tk.Button(root, text="PageRank", command=lambda: mostrarDadoExtraido('PageRank', rankingDasPaginas('arquivosnomeados')))
+buttonPageRank.pack()
+
+buttonS = tk.Button(root, text="Sair", command=root.destroy)
+buttonS.pack()
 
 root.mainloop()
