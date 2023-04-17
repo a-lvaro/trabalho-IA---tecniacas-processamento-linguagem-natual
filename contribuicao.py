@@ -18,7 +18,6 @@ class Contribuicao():
         return dictPadroes
     
     def __procurarContribuicao(self, texto: str) -> str:
-        # neste\s*trabalho
         reProblemaInicio = r'(criou\s*uma\s*base\s*de\s*dados|executou-se\s*dois\s*experimentos|estes resultados apresentados, comprovam|discutiu-se\s*a\s*variação|foi\s*proposto\s*um\s*modelo|neste trabalho, propusemos|neste  trabalho  foi utilizado  técnicas|mesmo sendo uma técnica promissora|neste trabalho foram  aplicadas técnicas|os resultados obtidos pela metodologia)\b'
         reProblemaFim = r'^(?:[^.]*\.){1}[^.]*\.' # identifica a segunda ocorrência de um ponto
 
@@ -30,8 +29,5 @@ class Contribuicao():
     
     def __extrairContribuicao(self, pdfLido: object) -> str:
         textoTopico = self.__topico._getTopico(pdfLido)
-        # print('|||||||||||||||||')
-        # print(textoTopico)
-        # print('|||||||||||||||||')
         contribuicao = self.__procurarContribuicao(textoTopico)
         return contribuicao

@@ -63,8 +63,11 @@ def telaExtracaoArtigo(arquivo: str):
     button5 = tk.Button(new_window, text="5. Referência", command=lambda: mostrarDadoExtraido('Referência', artigoEscolhido.getReferencia()))
     button5.grid(row=3, column=0)
 
-    button6 = tk.Button(new_window, text="Salvar dados", command=lambda: artigoEscolhido.salvarArtigo())
-    button6.grid(row=3, column=1)
+    button6 = tk.Button(new_window, text="6. Termor mais citados", command=lambda: mostrarDadoExtraido('Termos mais citados', artigoEscolhido.getTermosMaisCitados().most_common(10)))
+    button6.grid(row=4, column=0)
+
+    button7 = tk.Button(new_window, text="Salvar dados", command=lambda: artigoEscolhido.salvarArtigo())
+    button7.grid(row=3, column=1)
     
     # Adiciona um botão para voltar
     back_button = tk.Button(new_window, text="Voltar", command=new_window.destroy)
