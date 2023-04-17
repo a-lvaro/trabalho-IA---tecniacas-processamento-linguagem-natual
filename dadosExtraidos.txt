@@ -50,4 +50,322 @@ georreferenciamento de imagens do satélite cbers -i. dissertação de mestrado.
 - cepsrm, 2003. disponível em: http://hdl.handle.net/10183/6349. acesso em: 23 out. 2018||rosenblatt, f . the perceptron: a probabilistic mo del for information storage and 
 organization in the brain. psychological review , vol. 65, nº 6, p. 386 -408, 1958. disponível 
 em: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.335.3398 . acesso em: 11 out. 
-2018.  
+2018.  |++|
+o principal objetivo deste trabalho é propor um modelo de detecção e classiﬁcação de
+imagens de veículos chamado pvinet , o qual foi baseado no algoritmo yolov3 , que consiste
+em reduzir o número de parâmetros do modelo do yolov3 , mantendo um desempenho de
+detecção desejável, através da implementação de uma estrutura de conexão densa aprimorada.
+opvinet demonstra um melhor desempenho em acurácia e tempo de processamento em
+comparação com outros trabalhos similares. para diminuir este tempo utilizamos as três funções
+de ativação, que foram a softmax ,rectiﬁed linear unit (relu) e asoft-root-sign (srs) , sendo
+que a última obteve melhores resultados.
+propomos também a construção de um modelo de algoritmo de semáforo inteligente, no
+qual a saída do pvinet será a entrada de um modelo de semáforo inteligente.;;nesse contexto, espera-se que sistemas de semáforo inteligente possam identiﬁcar e
+classiﬁcar veículos de emergência como polícia, ambulância e bombeiros, para diminuir o
+tempo de espera no trânsito. para que esse tipo de semáforos tenha sucesso, é importante obter
+valores altos de acurácia na identiﬁcação e classiﬁcação desses veículos.;;
+neste capitulo, terá uma descrição mais completa das principais etapas da solução de
+semáforo inteligente proposto. a figura 4.1, ilustra como foi desenvolvido o trabalho. o
+ﬂuxograma geral é composto por 4 partes. que são:
+a)base de dados
+é um conjunto de dados formado por imagens homogêneas para o treinamento do
+modelo do dl.
+b)treinamento (deep learning)
+o modelo escolhido foi o pvinet que é uma melhoria do yolo v3, ele obteve uma
+alta taxa de precisão e um tempo de resposta muito rápido.
+c)validação deep learning
+após o treinamento do dl usando o pvinet , foi realizado uma fase de testes utili-
+zando imagens da bd para averiguar se o modelo utilizado realmente está realizando
+detecção de veículos.
+d)algoritmo proposto do semáforo
+o algoritmo do dl funcionará da seguinte forma:
+1. captação de imagens em tempo real
+2. detecção de veículos na via
+3. identiﬁcação de veículos
+4. classiﬁcação de veículos
+5. após o algoritmo do dl classiﬁcar os veículos, serão enviados sinais para
+a liberação ou não da via para o semáforo inteligente, de acordo com sua
+prioridade.
+vale ressaltar que o algoritmo do semáforo foi uma proposta teórica a qual não foi
+implementada ainda, mas poderá ser em trabalhos futuros. após a implementação do modelo
+do dl usando o pvinet imagens em tempo real serão utilizadas, no caso estas imagens são
+representadas em imagens novas.
+figure 4.1 – fluxograma geral da metodologia
+fonte: autor (2020);;foi proposto um modelo de detecção de veículos, que foi estudado e
+implementado. métodos como extração de características e ativação de funções foram investi-
+gados.;;
+referências
+adarsh, p.; rathi, p.; kumar, m. yolo v3-tiny: object detection and recognition using
+one stage improved model. in: . [s.l.]: ieee, 2020. p. 687–694. isbn 978-1-7281-5198-4.
+issn 2469-5556.
+alam, m. et al. real-time smart parking systems integration in distributed its for smart cities.
+journal of advanced transportation , hindawi, v. 2018, 2018.
+alpaydin, e. introduction to machine learning . [s.l.]: massachusetts institute of
+technology, 2010.
+angelidou, m. smart city policies: a spatial approach. cities , v. 41, p. s3 –
+s11, 2014. issn 0264-2751. current research on cities. disponível em: <http:
+//www.sciencedirect.com/science/article/pii/s026427511400095x>.
+ash, r. et al. real-time pedestrian trafﬁc light detection. in: . [s.l.]: ieee, 2018. p. 1–5. isbn
+978-1-5386-6379-0.
+asha, c. s.; narasimhadhan, a. v . vehicle counting for trafﬁc management system
+using yolo and correlation ﬁlter. in: . [s.l.]: ieee, 2018. p. 1–6. isbn 978-1-5386-1113-5.
+badrinarayanan, v .; kendall, a.; cipolla, r. segnet: a deep convolutional
+encoder-decoder architecture for image segmentation. ieee transactions on pattern
+analysis and machine intelligence , v. 39, n. 12, p. 2481–2495, 2017.
+barber, d. bayesian reasoning and machine learning . [s.l.]: cambridge university
+press, 2012.
+bastos selma maffei de andrade, l. c. j. y . g. l. acidentes de trânsito e o novo
+código de trânsito brasileiro em cidade da região sul do brasil. 1999.
+bauza, r.; gozalvez, j.; sanchez-soriano, j. road trafﬁc congestion detection
+through cooperative vehicle-to-vehicle communications. in: ieee local computer network
+conference . [s.l.: s.n.], 2010. p. 606–612.
+behrendt, k.; nov ak, l.; botros, r. a deep learning approach to trafﬁc lights:
+detection, tracking, and classiﬁcation. in: proc. ieee int. conf. robotics and automation
+(icra) . [s.l.: s.n.], 2017. p. 1370–1377.
+bengio, y . learning deep architectures for ai . now publishers, 2009. 131 p. (essence
+of knowledge, the). isbn 9781601982940. disponível em: <https://books.google.com.br/
+books?id=cq5ewg7fnimc>.
+bishop, c. pattern recognition and machine learning. in: . [s.l.: s.n.], 2006. v. 16, p.
+140–155.
+ceballos, g. r.; larios, v . m. a model to promote citizen driven government in a smart
+city: use case at gdl smart city. in: 2016 ieee international smart cities conference
+(isc2) . [s.l.: s.n.], 2016. p. 1–6.
+chapelle, o.; schölkopf, b.; zien, a. semi-supervised learning . mit press,
+2010. (adaptive computation and machine learning). isbn 9780262514125. disponível em:
+<https://books.google.com.br/books?id=zhaoqgaacaaj>.
+chen, f.; he, g.; chen, g. realization of boolean functions via cnn: mathematical theory,
+lsbf and template design. ieee transactions on circuits and systems i: regular papers ,
+v. 53, n. 10, p. 2203–2213, 2006.
+chen, s.; lin, w. embedded system real-time vehicle detection based on improved yolo
+network. in: . [s.l.]: ieee, 2019. p. 1400–1403. isbn 978-1-7281-0514-7.
+chen, w.; yeo, c. k. unauthorized parking detection using deep networks at real time. in:
+ieee. 2019 ieee international conference on smart computing (smartcomp) . [s.l.],
+2019. p. 459–463.
+chollet, f. deep learning with python . manning publications company, 2018.
+isbn 9781617294433. disponível em: <https://books.google.com.br/books?id=
+yo3caqaacaaj>.
+choudekar, p.; banerjee, s.; muju, m. k. implementation of image processing in real
+time trafﬁc light control. in: proc. 3rd int. conf. electronics computer technology . [s.l.:
+s.n.], 2011. v. 2, p. 94–98.
+chourabi, h. et al. understanding smart cities: an integrative framework. in: proc. 45th
+hawaii int. conf. system sciences . [s.l.: s.n.], 2012. p. 2289–2297. issn 1530-1605.
+chua, l. o. cnn: a paradigm for complexity . world scientific, 1998. disponível
+em: <https://www.worldscientiﬁc.com/doi/abs/10.1142/3801>.
+ciaburro, b. v . g. neural networks with r . [s.l.: s.n.], 2017.
+cidades, c. n. d. t. e. d. n. d. t. ministério das. código de trânsito brasileito e legislação
+complementar em vigor . [s.l.: s.n.], 2008.
+clevert, d.-a.; unterthiner, t.; hochreiter, s. fast and accurate deep network
+learning by exponential linear units (elus). under review of iclr2016 (1997) , 11 2015.
+crevier, d. ai: the tumultuous history of the search for artiﬁcial intelligence . [s.l.:
+s.n.], 1993. 1-386 p.
+dasgupta, m.; bandyopadhyay , o.; chatterji, s. automated helmet detection for
+multiple motorcycle riders using cnn. in: . [s.l.]: ieee, 2019. p. 1–4. isbn 978-1-7281-5399-5.
+deng, l. a tutorial survey of architectures, algorithms, and applications for deep learning.
+apsipa transactions on signal and information processing , cambridge university press,
+v. 3, p. e2, 2014.
+du, l. et al. real-time detection of vehicle and trafﬁc light for intelligent and connected
+vehicles based on yolov3 network. in: . [s.l.]: ieee, 2019. p. 388–392. isbn 978-1-7281-
+0490-4.
+díaz, n.; guerra, j.; nicola, j. smart trafﬁc light control system. in: 2018 ieee third
+ecuador technical chapters meeting (etcm) . [s.l.: s.n.], 2018. p. 1–4.
+fawcett, t. an introduction to roc analysis. elsevier , 2006.
+giffinger rudolf; fertner, c. k. h. k. r. p.-m. n. m. e. smart cities - ranking of
+european medium-sized cities. university of copenhagen , 2007.
+girshick, r. fast r-cnn. microsoft research , 2015.
+girshick, r. et al. rich feature hierarchies for accurate object detection and semantic
+segmentation. in: proceedings of the ieee conference on computer vision and pattern
+recognition . [s.l.: s.n.], 2014. p. 580–587.
+gong, h. et al. object detection based on improved yolov3-tiny. in: . [s.l.]: ieee, 2019. p.
+3240–3245. isbn 978-1-7281-4095-7. issn 2688-092x.
+goodfellow, i.; bengio, y .; courville, a. deep learning . [s.l.]: mit press, 2016.
+<http://www.deeplearningbook.org>.
+goodfellow, i. et al. maxout networks. 30th international conference on machine
+learning, icml 2013 , v. 1302, 02 2013.
+gu, s. et al. a new deep learning method based on alexnet model and ssd model for tennis ball
+recognition. in: 2017 ieee 10th international workshop on computational intelligence
+and applications (iwcia) . [s.l.: s.n.], 2017. p. 159–164.
+harahap, e. et al. modeling and simulation of queue waiting time at trafﬁc light intersection.
+journal of physics: conference series , iop publishing, v. 1188, p. 012001, mar 2019.
+disponível em: <https://doi.org/10.1088%2f1742-6596%2f1188%2f1%2f012001>.
+he, k. et al. delving deep into rectiﬁers: surpassing human-level performance on imagenet
+classiﬁcation. in: 2015 ieee international conference on computer vision (iccv) . [s.l.:
+s.n.], 2015. p. 1026–1034.
+he, k. et al. deep residual learning for image recognition. in: proceedings of the ieee
+conference on computer vision and pattern recognition . [s.l.: s.n.], 2016. p. 770–778.
+hinton, g. e. deep belief networks. scholarpedia , v. 4, p. 5947, 2009.
+holanda, a. b. de. novo dicionário aurélio da língua portuguesa (1986) . [s.l.]: 1
+janeiro 1986, 1986. isbn 8520904114.
+huang, g. et al. densely connected convolutional networks. in: 2017 ieee conference on
+computer vision and pattern recognition (cvpr) . [s.l.: s.n.], 2017. p. 2261–2269.
+huang, j. et al. speed/accuracy trade-offs for modern convolutional object detectors. in: .
+[s.l.]: ieee, 2017. p. 3296–3297. isbn 978-1-5386-0458-8. issn 1063-6919.
+huang, x. et al. the apolloscape dataset for autonomous driving. in: . [s.l.]: ieee, 2018. p.
+1067–10676. isbn 978-1-5386-6101-7. issn 2160-7508.
+huang, y .-q. et al. optimized yolov3 algorithm and its application in trafﬁc ﬂow detections.
+applied sciences , v. 10, p. 3079, 04 2020.
+ioffe, s.; szegedy , c. batch normalization: accelerating deep network training
+by reducing internal covariate shift. corr , abs/1502.03167, 2015. disponível em:
+<http://arxiv.org/abs/1502.03167>.
+jeong, j.; park, h.; kwak, n. enhancement of ssd by concatenating feature maps for
+object detection. arxiv preprint arxiv:1705.09587 , 2017.
+jiao, l. et al. a survey of deep learning-based object detection. ieee, v. 7, p. 128837–128868,
+2019. issn 2169-3536.
+kanungo, a.; sharma, a.; singla, c. smart trafﬁc lights switching and trafﬁc density
+calculation using video processing. in: . [s.l.]: ieee, 2014. p. 1–6. isbn 978-1-4799-2290-1.
+klambauer, g. et al. self-normalizing neural networks. corr , abs/1706.02515, 2017.
+disponível em: <http://arxiv.org/abs/1706.02515>.
+krizhevsky , a.; sutskever, i.; hinton, g. imagenet classiﬁcation with deep
+convolutional neural networks. neural information processing systems , v. 25, 01 2012.
+kumar, n. m.; goel, s.; mallick, p. k. smart cities in india: features, policies, current
+status, and challenges. in: 2018 technologies for smart-city energy security and power
+(icsesp) . [s.l.: s.n.], 2018. p. 1–4.
+lam, c.-t.; ng, b.; chan, c.-w. real-time trafﬁc status detection from on-line images using
+generic object detection system with deep learning. in: . [s.l.]: ieee, 2019. p. 1506–1510.
+isbn 978-1-7281-0536-9. issn 2576-7844.
+lan, w. et al. pedestrian detection based on yolo network model. in: . [s.l.]: ieee, 2018. p.
+1547–1551. isbn 978-1-5386-6076-8. issn 2152-7431.
+lecun, y .; bengio, y .; hinton, g. deep learning. nature , v. 521, p. 436–44, 05 2015.
+lee, j. t.; chung, y . deep learning-based vehicle classiﬁcation using an ensemble of
+local expert and global networks. in: proc. ieee conf. computer vision and pattern
+recognition workshops (cvprw) . [s.l.: s.n.], 2017. p. 920–925. issn 2160-7516.
+li, j. et al. application research of improved yolo v3 algorithm in pcb electronic component
+detection. applied sciences , multidisciplinary digital publishing institute, v. 9, n. 18, p. 3750,
+2019.
+lin, j.-p.; sun, m.-t. a yolo-based trafﬁc counting system. in: . [s.l.]: ieee, 2018. p. 82–85.
+isbn 978-1-7281-1230-5. issn 2376-6816.
+liu, w. et al. ssd: single shot multibox detector. in: leibe, b. et al. (ed.). computer
+vision – eccv 2016 . cham: springer international publishing, 2016. p. 21–37. isbn
+978-3-319-46448-0.
+liu, y .; liu, l.; chen, w. intelligent trafﬁc light control using distributed multi-agent q
+learning. in: proc. ieee 20th int. conf. intelligent transportation systems (itsc) . [s.l.:
+s.n.], 2017. p. 1–8. issn 2153-0017.
+lou, l. et al. vehicles detection of trafﬁc ﬂow video using deep learning. in: . [s.l.]: ieee,
+2019. p. 1012–1017. isbn 978-1-7281-1455-2.
+maas, a. l.; hannun, a. y .; ng, a. y . rectiﬁer nonlinearities improve neural network
+acoustic models. in: in icml workshop on deep learning for audio, speech and
+language processing . [s.l.: s.n.], 2013.
+manville, c. et al. mapping smart cities in the eu. study . [s.l.]: directorate-general
+for internal policies, policy department a: economic and . . . , 2014.
+mccarthy john; minsky , m. l. r. n.; shannon, c. e. a proposal for the dartmouth
+summer research project on artiﬁcial intelligence. ai magazine , v. 27, n. 4, 2006.
+mccorduck, p. machines who think : a personal inquiry into the history and
+prospects of artiﬁcial intelligence . natick, mass.: a.k. peters, 2004. issn 1568812051
+9781568812052.
+mcculloch, w. s.; pitts, w. h. a logical calculus of the ideas immanent in
+nervous activity . [s.l.: s.n.], 1943. v. 5. 115-133 p.
+moghaddam, m. j.; hosseini, m.; safabakhsh, r. trafﬁc light control based on
+fuzzy q-leaming. in: proc. the int. symp. artiﬁcial intelligence and signal processing
+(aisp) . [s.l.: s.n.], 2015. p. 124–128.
+mohri, m.; rostamizadeh, a.; talwalkar, a. foundations of machine learning .
+2nd. ed. [s.l.]: the mit press, 2018. isbn 0262039400.
+mori, k.; christodoulou, a. review of sustainability indices and indicators: towards
+a new city sustainability index (csi). environmental impact assessment review , elsevier,
+v. 32, n. 1, p. 94–106, 2012.
+mulder steven bethardb, m.-f. m. w. d. a survey on the application of recurrent
+neural networks to statistical language modeling. 2015.
+müller, j.; dietmayer, k. detecting trafﬁc lights by single shot detection. in: ieee.
+2018 21st international conference on intelligent transportation systems (itsc) . [s.l.],
+2018. p. 266–273.
+nair, v .; hinton, g. rectiﬁed linear units improve restricted boltzmann machines vinod
+nair. in: . [s.l.: s.n.], 2010. v. 27, p. 807–814.
+nellore, k.; hancke, g. trafﬁc management for emergency vehicle priority based on
+visual sensing. sensors , multidisciplinary digital publishing institute, v. 16, n. 11, p. 1892,
+2016.
+ning, c. et al. inception single shot multibox detector for object detection. in: . [s.l.]: ieee,
+2017. p. 549–554. isbn 978-1-5386-0561-5.
+nwankpa, c. et al. activation functions: comparison of trends in practice and
+research for deep learning . 2018.
+peng, q. et al. pedestrian detection for transformer substation based on gaussian mixture
+model and yolo. in: . [s.l.]: ieee, 2016. v. 02, p. 562–565. isbn 978-1-5090-0769-1.
+pon, a. et al. a hierarchical deep architecture and mini-batch selection method for joint trafﬁc
+sign and light detection. in: ieee. 2018 15th conference on computer and robot vision
+(crv) . [s.l.], 2018. p. 102–109.
+ramachandran, p.; zoph, b.; le, q. v . searching for activation functions. corr ,
+abs/1710.05941, 2017. disponível em: <http://arxiv.org/abs/1710.05941>.
+raza vian, a. s. et al. cnn features off-the-shelf: an astounding baseline for recognition.
+in:2014 ieee conference on computer vision and pattern recognition workshops .
+[s.l.: s.n.], 2014. p. 512–519.
+redmon, j. et al. you only look once: uniﬁed, real-time object detection. in: proceedings
+of the ieee conference on computer vision and pattern recognition . [s.l.: s.n.], 2016. p.
+779–788.
+redmon, j.; farhadi, a. yolo9000: better, faster, stronger. in: . [s.l.]: ieee, 2017. p.
+6517–6525. isbn 978-1-5386-0458-8. issn 1063-6919.
+redmon, j.; farhadi, a. yolov3: an incremental improvement. arxiv 2018. arxiv
+preprint arxiv:1804.02767 , 2019.
+ren kaiming he, r. g. s.; sun, j. faster r-cnn: towards real-time object detection with
+region proposal networks. 2016.
+ren, p.; fang, w.; djahel, s. a novel yolo-based real-time people counting approach. in:
+. [s.l.]: ieee, 2017. p. 1–2. isbn 978-1-5386-2525-5.
+rothaus, k.; roters, j.; jiang, x. localization of pedestrian lights on mobile devices.
+in: asia-pacific signal and information processing association, 2009
+annual . . . . proceedings: apsipa asc 2009: asia-paciﬁc signal and information
+processing association, 2009 annual summit and conference . [s.l.], 2009. p. 398–405.
+russakovsky , o. et al. imagenet large scale visual recognition challenge. international
+journal of computer vision , v. 115, 09 2014.
+russell, s. j.; norvig, p. artiﬁcial intelligence: a modern approach . 4th ed.. ed. [s.l.:
+s.n.], 2020. isbn 0-13-461099-7.
+sazli, m. a brief review of feed-forward neural networks. v. 50, p. 11–17, 01 2006.
+schmidhuber, j. deep learning in neural networks: an overview. neural networks , v. 61,
+04 2015.
+silv a, c. m.; aquino, a. l.; meira, w. smart trafﬁc light for low trafﬁc conditions.
+mobile networks and applications , springer, v. 20, n. 2, p. 285–293, 2015.
+silv aa, m. k. e. k. h. b. n. towards sustainable smart cities: a review of trends,
+architectures,components, and open challenges in smart cities. 2018.
+smith chris; mcguire, b. h. t.; yang, g. the history of artiﬁcial intelligence.
+university of washington , 2006.
+smola, a.; vishwanathan, s. introduction to machine learning . [s.l.: s.n.], 2008.
+sperling, d.; gordon, d. two billion cars: transforming a culture. tr news , n. 259,
+2008.
+szegedy, c. et al. going deeper with convolutions. in: 2015 ieee conference on
+computer vision and pattern recognition (cvpr) . [s.l.: s.n.], 2015. p. 1–9.
+tahmid, t.; hossain, e. density based smart trafﬁc control system using canny edge
+detection algorithm for congregating trafﬁc information. in: . [s.l.]: ieee, 2017. p. 1–5. isbn
+978-1-5386-2308-4.
+tao, j. et al. an object detection system based on yolo in trafﬁc scene. in: . [s.l.]: ieee, 2017.
+p. 315–319. isbn 978-1-5386-0494-6.
+tao, j. et al. an object detection system based on yolo in trafﬁc scene. in: 2017 6th
+international conference on computer science and network technology (iccsnt) .
+[s.l.: s.n.], 2017. p. 315–319.
+tharw, a. classiﬁcation assessment methods. 2018.
+tharwat, a. classiﬁcation assessment methods. sciencedirect , 2018.
+toscano, w. inteligência artiﬂcial introdução. uninove , 2009.
+uijlings, j. r. r. et al. selective search for object recognition. international journal
+of computer vision , v. 104, n. 2, p. 154–171, 2013. issn 1573-1405. disponível em:
+<https://doi.org/10.1007/s11263-013-0620-5>.
+v aliati, g. r.; menotti, d. detecting pedestrians with yolov3 and semantic segmentation
+infusion. in: . [s.l.]: ieee, 2019. p. 95–100. isbn 978-1-7281-3228-0. issn 2157-8672.
+v aluev a, m. et al. application of the residue number system to reduce hardware costs of the
+convolutional neural network implementation. mathematics and computers in simulation ,
+elsevier, 2020.
+who, u.; mathers, c. et al. global strategy for women’s, children’s and adolescents’
+health (2016-2030). organization , v. 2016, n. 9, 2017.
+wu, y .; tsai, c. pedestrian, bike, motorcycle, and vehicle classiﬁcation via deep learning:
+deep belief network and small training set. in: proc. int. conf. applied system innovation
+(icasi) . [s.l.: s.n.], 2016. p. 1–4.
+wu, z. et al. multi-scale vehicle detection for foreground-background class imbalance with
+improved yolov2. sensors , multidisciplinary digital publishing institute, v. 19, n. 15, p. 3336,
+2019.
+xu, b. et al. empirical evaluation of rectiﬁed activations in convolutional network. arxiv
+preprint arxiv:1505.00853 , 2015.
+yang, z. et al. combining yolov3-tiny model with dropblock for tiny-face detection. in:
+ieee. 2019 ieee 19th international conference on communication technology (icct) .
+[s.l.], 2019. p. 1673–1677.
+zaid, a. a.; suhweil, y .; yaman, m. a. smart controlling for trafﬁc light time. in:
+proc. ieee jordan conf. applied electrical engineering and computing technologies
+(aeect) . [s.l.: s.n.], 2017. p. 1–5.
+zhang, x.; zhu, x. vehicle detection in the aerial infrared images via an improved
+yolov3 network. in: ieee. 2019 ieee 4th international conference on signal and image
+processing (icsip) . [s.l.], 2019. p. 372–376.
+zhang, y . new advances in machine learning . [s.l.]: intech (february 01, 2010), 2010.
+isbn 978-953-51-5906-3.
+zhao, c.; chen, b. real-time pedestrian detection based on improved yolo model. in: .
+[s.l.]: ieee, 2019. v. 2, p. 25–28. isbn 978-1-7281-1860-4.
+zhao, z. et al. object detection with deep learning: a review. ieee transactions on neural
+networks and learning systems , v. 30, n. 11, p. 3212–3232, 2019.
+zhao, z.-q. et al. object detection with deep learning: a review. ieee, v. 30, p. 3212–3232,
+2019. issn 2162-2388.
+zheng, y . et al. a method of detect trafﬁc police in complex scenes. in: . [s.l.]: ieee, 2018.
+p. 83–87. isbn 978-1-7281-0170-5.
+zhou, y . et al. soft-root-sign activation function . 2020.
+zou, x. a review of object detection techniques. in: 2019 international conference on
+smart grid and electrical automation (icsgea) . [s.l.: s.n.], 2019. p. 251–254.
