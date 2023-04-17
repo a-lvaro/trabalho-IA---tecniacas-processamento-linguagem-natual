@@ -4,6 +4,7 @@ from referencia import Referencia
 from problema import Problema
 from metodologia import Metodologia
 from contribuicao import Contribuicao
+# from termosMaisCitados import TermosMaisCitados
 from manipularPDF import lerPDF
 
 
@@ -17,6 +18,7 @@ class Artigo():
         self.__problema = Problema(self.__pdfLido, self.__sumario)
         self.__contribuicao = Contribuicao(self.__pdfLido, self.__sumario)
         self.__referencia = Referencia(self.__pdfLido, self.__sumario)
+        # self.__termosMaisCitados = TermosMaisCitados(self.__pdfLido, self.__sumario)
 
     def getSumario(self) -> dict:
         return self.__sumario.getSumario()
@@ -48,8 +50,17 @@ class Artigo():
         with open('dadosExtraidos.txt', 'a') as arquivo:
             arquivo.write(texto)
 
+    # def getTermosMaisCitados(self) -> TermosMaisCitados:
+    #     return self.__termosMaisCitados.getContaTermos()
 
-# artigo = Artigo('artigos/DetecçãoCâncerMama.pdf')
+    
+
+
+artigo = Artigo('artigos/utilizacaoredesneuraisconvolucionais.pdf')
+
+# print(artigo.getTermosMaisCitados().most_common(10))
+
+
 # print(artigo.getSumario())
 # print('\n\n OBJETIVO') 
 # print(artigo.getObjetivo())
