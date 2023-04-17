@@ -49,7 +49,7 @@ class Artigo():
             arquivo.write(texto)
 
 
-artigo = Artigo('artigos/CLASSIFICAÇÃO DE VEÍCULOS BASEADA EM DEEP LEARNING PARA APLICAÇÃO EM SEMÁFOROS INTELIGENTES LAVRAS – MG 2021.pdf')
+# artigo = Artigo('artigos/DetecçãoCâncerMama.pdf')
 # print(artigo.getSumario())
 # print('\n\n OBJETIVO') 
 # print(artigo.getObjetivo())

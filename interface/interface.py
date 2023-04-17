@@ -44,7 +44,7 @@ def telaExtracaoArtigo(arquivo: str):
     label = tk.Label(new_window, text='Escolha o que você deseja visualizar do arquivo ' + arquivo)
     label.grid(row=0, column=0, columnspan=2) 
 
-    artigoEscolhido = Artigo('artigos/CLASSIFICAÇÃO DE VEÍCULOS BASEADA EM DEEP LEARNING PARA APLICAÇÃO EM SEMÁFOROS INTELIGENTES LAVRAS – MG 2021.pdf')
+    artigoEscolhido = Artigo('artigos/' + arquivo)
     
     # Adiciona botões na nova janela
     button1 = tk.Button(new_window, text="1. Objetivo", command=lambda: mostrarDadoExtraido('Objetivo', artigoEscolhido.getObjetivo()))
