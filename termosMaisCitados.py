@@ -65,11 +65,3 @@ class TermosMaisCitados:
 
         contagemTermos = self.__contagemTermos(textoArtigo)
         return contagemTermos
-
-
-# contagemPalavras = contagemTermos(artigoPreProcessado)
-# contagemPalavras.most_common(10)
-
-
-
-# nuvemPalavras(artigoPreProcessado, 10)

@@ -75,7 +75,7 @@ def telaExtracaoArtigo(arquivo: str):
     back_button.grid(row=4, column=0, columnspan=2)  
 
 root = tk.Tk()
-root.title("Exemplo de Interface Gráfica")
+root.title("Menu artigos")
 
 texto = '''Trabalho de inteligência artificial
 O objetivo desse trabalho é utilizar técnicas de PLN para analisar textos científicos
