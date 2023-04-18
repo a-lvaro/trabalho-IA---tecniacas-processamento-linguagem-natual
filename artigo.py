@@ -51,7 +51,8 @@ class Artigo():
             arquivo.write(texto)
 
     def getTermosMaisCitados(self) -> TermosMaisCitados:
-        self.__termosMaisCitados = TermosMaisCitados(self.__pdfLido, self.__sumario)
+        if self.__termosMaisCitados == None:
+            self.__termosMaisCitados = TermosMaisCitados(self.__pdfLido, self.__sumario)
         return self.__termosMaisCitados.getContaTermos()
 
     

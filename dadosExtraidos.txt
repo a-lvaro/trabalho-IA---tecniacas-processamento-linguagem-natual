@@ -1,0 +1,68 @@
+|++|  
+demonstrar a viabilidade da resolução do problema de reconhecimento de 
+placas de licenciamento veiculares utilizando apenas uma cnn . ;;resolver o problema do reconhecimento 
+automático de placas de licenciamento surge como opção possivelmente viável as 
+tradicionais técni cas de visão computacional e aprendizado de máquina existentes, e já 
+utilizadas comercialmente, para resolver esse problema em específico.;;  
+o presente trabalho seguiu uma abordagem metodológica qualitativa. os 
+resultados serão apresentados sob  a forma de conclusões deles extraídas. para a 
+obtenção do s referidos r esultados, alguns passos foram seguidos e serão d iscriminado s 
+a seguir.  ;;criou 
+uma base de dados com placas de licenciamento veiculares brasileiras, desenvolveu 
+uma cnn para processar as placas e obteve resultados que demonstram a viabilidade 
+do tema.  
+não era objetivo do trabalho desenvolver um sistema que pudesse ser utilizado 
+comercialmente, portanto algumas tarefas poderão ser feitas em trabalhos futuros como:  
+• testar o grau  de acurácia da inferência feita a partir de um banco de 
+testes gerado por computador;  
+• realizar críticas sobre os dados como por exemplo o fato de existir um 
+padrão aaa9999 nos dados que não foi levado em consideração para 
+as inferências;  
+• construir um banc o de dados via computador para reconhecimento das 
+novas placas do mercosul;  
+• alterar a arquitetura da rede de forma radical e testar o nível de 
+influência sobre as inferências;  
+• testar outras arquiteturas já existentes de cnn .;; referências  
+araújo , flávio h. d. ; carneiro , allan c. ; silva , romuere r. v. ; medeiros , fátima 
+n. s. ; ushizima , daniela m.  redes neurais convolucionais com tensorﬂow: teoria e 
+prática . iii escola regional de informática do piauí. livro anais - artigos e minicursos, v. 1, 
+n. 1,  p. 382 -406, jun, 2017.  disponível em:  
+http://www.eripi.com.br/2017/images/anais/minicursos/7.pdf . acesso em: 1 5 out. 2018||barca , maria carolina stockler ; silveira , tiago redondo de siqueira ; magini , marcio . 
+treinamento de redes neurais artificiais: o algoritmo  
+backpropagation . in: ix encontro latino americano de iniciação científica e v 
+encontro latino americano de pós -graduação, universidade do vale do paraíba. vale do 
+paraíba: univap; 200 5. p. 46-49. disponível em:  
+http://www.inicepg.u nivap.br/cd/inic_2005/inic/ic1%20anais/ic1 -17.pdf . acesso em: 12 
+out. 2018||dpl, deep learning book. capítulo 23 – como funciona o dropout? . disponível em:  
+http://deeplearningbook.com.br/capitulo -23-como -funciona -o-dropout/ . acesso em: 1 4 out. 
+2018||facure, matheus. funções de ativação  - entendendo a importância da ativação correta 
+nas redes neurais , 2017 . disponível em:  https://matheusfacure.github.io/2017/07/12/activ -
+func/ . acesso em: 1 4 out. 2018||ferreira, a lessandro  dos santos. redes neurais conv olucionais profundas na detecção 
+de plantas daninhas em lavoura de soja . dissertação de  mestrado, universidade federal de 
+mato grosso do sul , 2017 . disponível em: 
+http://www.gpec.ucdb.br/pistori/orientacoes/dissertacoes/alessandro2017.pdf . acesso em: 1 5 
+out. 2018||jin, lisheng ; xian , huacai ; bie, jing; sun , yuqin ; hou , haijing ; niu, qingning . license 
+plate recognition algorithm for passenger cars in chinese residential areas . sensors (basel), 
+p. 8355 –8370, 2012. disponível em : https://www.ncbi.nlm.nih.gov/pubmed/22969404 . acesso 
+em: 25 out . 2018||karpathy, a. cs231n convolutional neural networks for visual recognition . 
+disponível em: http://cs231n.github.io/convolutional -networks/. acesso em: 15 out. 2018||lecun , y.; bottou , l.; bengio , y.; haffner , p. gradient -based learning applied 
+to document recognition . proc. of the ieee, nov.,. 1998. disponível em: 
+http://yann.lecun.com/exdb/publis/pdf/lecun -01a.pdf . acesso em: 1 4 out. 2018||mccaffrey , james d.  why you should us e cross -entropy error instead of classification 
+error or mean squared error for neural network classifier training . 2013. disponível em:  
+https://jamesmccaffrey.wordpress.com/2013/11/05/why -you-should -use-cross -entropy -error - instead -of-classification -error -or-mean -squared -error -for-neural -network -classifier -training/ . 
+acesso em: 12 out. 2018||mcculloch, warren s.; pitts, w alter. a logical calculus of the ideas immanent in nervous 
+activity . bulletin of mathematical biophysics , vol. 5, p. 115 -133, 1943. disponível em: 
+https://pdfs.semanticscholar.org/5272/8a99829792c3272043842455f3a110e841b1.pdf. 
+acesso em: 11 out. 2018||nascimento, e. o.; oliveira, l. n. sensitivity analysis of cutting force on milling 
+process using factorial experimental planning and ne ural networks. ieee latin america 
+transactions , vol. 14, n. 12, p. 4811 -4820, 2016. disponível em:  
+https://www.researchgate.net/publication/312027170_sensitivity_analysis_of_cutting_force
+_on_milling_process_using_factorial_experimental_planning_and_artific ial_neural_netwo
+rks. acesso em: 1 2 out. 2018||papagelis, anthony j.; kim, dong soo. backpropagation . disponível em:  
+https://www.cse.unsw.edu.au/~cs9417ml/mlp2/backpropagation.html. acesso em: 1 3 out. 
+2018||queiroz, corina jará de. análise de transformações geométricas para o 
+georreferenciamento de imagens do satélite cbers -i. dissertação de mestrado. ufrgs 
+- cepsrm, 2003. disponível em: http://hdl.handle.net/10183/6349. acesso em: 23 out. 2018||rosenblatt, f . the perceptron: a probabilistic mo del for information storage and 
+organization in the brain. psychological review , vol. 65, nº 6, p. 386 -408, 1958. disponível 
+em: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.335.3398 . acesso em: 11 out. 
+2018.  
